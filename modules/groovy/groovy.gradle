@@ -27,15 +27,15 @@ configurations {
 }
 
 dependencies {
-    compile group: "com.twosigma", name: "beakerx-kernel-base", version: "$beakerxVersion"
-    compile group: "org.codehaus.groovy", name: "groovy-all", version: "3.0.3"
-    compile group: 'org.antlr', name: 'antlr4-runtime', version: "$antlr4Version"
+    implementation group: "com.twosigma", name: "beakerx-kernel-base", version: "$beakerxVersion"
+    implementation group: "org.codehaus.groovy", name: "groovy-all", version: "3.0.3"
+    implementation group: 'org.antlr', name: 'antlr4-runtime', version: "$antlr4Version"
 
     antlr group: 'org.antlr', name: 'antlr4', version: "$antlr4Version"
 
     runtimetools group: "com.twosigma", name: "beakerx-runtimetools", version: "$beakerxVersion"
 
-    testCompile group: "com.twosigma", name: "beakerx-kernel-base-test", version: "$beakerxVersion"
+    testImplementation group: "com.twosigma", name: "beakerx-kernel-base-test", version: "$beakerxVersion"
 }
 
 task antlr4_groovy_lexer(type: JavaExec) {
@@ -76,12 +76,12 @@ publishing {
 
 distZip.dependsOn installDist
 
-task copyDependencies(type: Copy) {
-    from configurations.runtime
+task copyDependenciesToJar(type: Copy) {
+    from configurations.runtimetools
     from jar
     into new File('../groovy-dist/beakerx_groovy/kernel/', 'lib')
 }
-jar.finalizedBy copyDependencies
+jar.finalizedBy copyDependenciesToJar
 
 task copyStaticContent(type: Copy) {
     from '.'

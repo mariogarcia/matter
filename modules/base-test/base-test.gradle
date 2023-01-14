@@ -5,9 +5,9 @@ repositories {
 }
 
 dependencies {
-    compile project(':base-api')
-    compile group: 'org.assertj', name: 'assertj-core', version: '3.6.1'
-    compile group: 'junit', name: 'junit', version: '4.12'
+    implementation project(':base-api')
+    implementation group: 'org.assertj', name: 'assertj-core', version: '3.6.1'
+    implementation group: 'junit', name: 'junit', version: '4.12'
 }
 
 publishing {
