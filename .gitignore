@@ -1,0 +1,38 @@
+# IntelliJ
+.idea/
+.iml
+
+# Gradle
+.gradle/
+/build/
+**/build/
+
+# Jupyter
+**/.ipynb_checkpoints/
+
+# Python
+*.py[cod]
+__pycache__/
+*.egg-info/
+
+# base module
+**/base/src/main/resources/build_time
+**/base/src/main/resources/hash
+beakerx_inspect.json
+
+# doclet module
+**/doclet/bin/
+**/doclet/out/
+**/doclet/beakerx_inspect.json
+
+# groovy module
+GroovyLexer.java
+GroovyLexer.tokens
+GroovyParser.java
+GroovyParser.tokens
+GroovyParserBaseListener.java
+GroovyParserListener.java
+
+# groovy-dist module
+**/groovy-dist/beakerx_groovy/kernel/*
+**/groovy-dist/dist

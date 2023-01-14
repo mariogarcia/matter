@@ -1,0 +1,44 @@
+plugins {
+    id 'org.kordamp.gradle.java-project' version '0.47.0'      
+}
+
+config {
+    release = (rootProject.findProperty('release') ?: false).toBoolean()  
+
+    info {                                                                
+        name        = 'Matter'
+        vendor      = 'Grooviter'
+        description = 'Groovy Jupyter Kernel'
+
+        links {
+            website      = 'https://github.com/grooviter/matter'
+            issueTracker = 'https://github.com/grooviter/matter/issues'
+            scm          = 'https://github.com/grooviter/matter.git'
+        }
+
+        people {
+            person {
+                id    = 'mariogarcia'
+                name  = 'Mario Garcia'
+                roles = ['developer']
+            }
+        }
+    }
+
+    licensing {                                                           
+        licenses {
+            license {
+                id = 'Apache-2.0'
+            }
+        }
+    }
+}
+
+allprojects {
+    apply plugin: 'java'
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+    }
+}
