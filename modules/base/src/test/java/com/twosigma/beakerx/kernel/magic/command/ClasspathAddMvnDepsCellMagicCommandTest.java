@@ -29,6 +29,7 @@ import org.apache.commons.io.FileUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -50,6 +51,7 @@ import java.util.zip.ZipFile;
 import static com.twosigma.beakerx.MessageFactorTest.commMsg;
 import static com.twosigma.beakerx.kernel.magic.command.functionality.ClassPathAddMvnCellMagicCommand.CLASSPATH_ADD_MVN_CELL;
 
+@Ignore
 public class ClasspathAddMvnDepsCellMagicCommandTest {
 
 

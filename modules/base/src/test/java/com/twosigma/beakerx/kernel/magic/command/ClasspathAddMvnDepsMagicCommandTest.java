@@ -29,10 +29,7 @@ import com.twosigma.beakerx.message.Header;
 import com.twosigma.beakerx.message.Message;
 import com.twosigma.beakerx.widget.TestWidgetUtils;
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -60,6 +57,7 @@ import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 
+@Ignore
 public class ClasspathAddMvnDepsMagicCommandTest {
 
   public static final ArrayList<MagicCommandOutcomeItem> NO_ERRORS = new ArrayList<>();

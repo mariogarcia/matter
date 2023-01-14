@@ -1,4 +1,6 @@
-version 'unspecified'
+plugins {
+    id 'java-library'
+}
 
 repositories {
     mavenCentral()
@@ -6,8 +8,8 @@ repositories {
 
 dependencies {
     implementation project(':base-api')
-    implementation group: 'org.assertj', name: 'assertj-core', version: '3.6.1'
-    implementation group: 'junit', name: 'junit', version: '4.12'
+    api group: 'org.assertj', name: 'assertj-core', version: '3.6.1'
+    api group: 'junit', name: 'junit', version: '4.12'
 }
 
 publishing {
