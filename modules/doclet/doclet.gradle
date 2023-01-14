@@ -15,7 +15,11 @@
  */
 apply plugin: 'java'
 
-sourceCompatibility = JavaVersion.VERSION_11
+//sourceCompatibility = JavaVersion.VERSION_11
+
+configurations {
+    docletRuntime.extendsFrom runtimeOnly
+}
 
 repositories {
     mavenCentral()
@@ -26,7 +30,7 @@ jar {
         attributes 'Main-Class': 'com.twosigma.beakerx.BeakerxDoclet'
     }
     doFirst {
-        from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
+        from { configurations.docletRuntime.collect { it.isDirectory() ? it : zipTree(it) } }
     }
 }
 

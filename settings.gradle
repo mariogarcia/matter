@@ -8,7 +8,7 @@ buildscript {
 }
 apply plugin: 'org.kordamp.gradle.settings'
 
-rootProject.name = 'root'
+rootProject.name = 'matter'
 
 projects {
     directories = ['docs', 'modules']

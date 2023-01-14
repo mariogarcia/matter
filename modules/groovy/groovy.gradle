@@ -27,15 +27,14 @@ configurations {
 }
 
 dependencies {
-    implementation group: "com.twosigma", name: "beakerx-kernel-base", version: "$beakerxVersion"
-    implementation group: "org.codehaus.groovy", name: "groovy-all", version: "3.0.3"
-    implementation group: 'org.antlr', name: 'antlr4-runtime', version: "$antlr4Version"
+    implementation project(":base")
+    implementation "org.codehaus.groovy:groovy:3.0.3"
 
+    implementation group: 'org.antlr', name: 'antlr4-runtime', version: "$antlr4Version"
     antlr group: 'org.antlr', name: 'antlr4', version: "$antlr4Version"
 
-    runtimetools group: "com.twosigma", name: "beakerx-runtimetools", version: "$beakerxVersion"
-
-    testImplementation group: "com.twosigma", name: "beakerx-kernel-base-test", version: "$beakerxVersion"
+    runtimetools project(":runtimetools")
+    testImplementation project(":base-test")
 }
 
 task antlr4_groovy_lexer(type: JavaExec) {

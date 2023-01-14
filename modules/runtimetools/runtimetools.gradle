@@ -1,5 +1,5 @@
 /*
- *  Copyright 2017 TWO SIGMA OPEN SOURCE, LLC
+ *  Copyright 2020 TWO SIGMA OPEN SOURCE, LLC
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,26 +13,20 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.beaker;
 
-public class BeakerXClasspathTest {
 
-  public static final String staticTest = "static_123";
-  public String objectTest = "object_123";
+dependencies {
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
 
-  public BeakerXClasspathTest() {
-  }
 
-  public static void main(String[] args) {
-    BeakerXClasspathTest t = new BeakerXClasspathTest();
-    System.out.println(t.getObjectTest());
-  }
-
-  public String getObjectTest() {
-    return this.objectTest;
-  }
-
-  public void setObjectTest(String objectTest) {
-    this.objectTest = objectTest;
-  }
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId 'com.twosigma'
+            artifactId 'beakerx-runtimetools'
+            version "$beakerxVersion"
+            from components.java
+        }
+    }
 }
