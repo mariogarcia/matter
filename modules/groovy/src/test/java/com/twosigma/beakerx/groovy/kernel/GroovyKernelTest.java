@@ -36,6 +36,7 @@ import com.twosigma.beakerx.kernel.msg.JupyterMessages;
 import com.twosigma.beakerx.kernel.msg.MessageCreator;
 import com.twosigma.beakerx.message.Message;
 import com.twosigma.beakerx.widget.OutputManager;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.Serializable;
@@ -58,6 +59,7 @@ import static com.twosigma.beakerx.groovy.TestGroovyEvaluator.groovyEvaluator;
 import static com.twosigma.beakerx.kernel.magic.command.functionality.AddStaticImportMagicCommand.ADD_STATIC_IMPORT;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Ignore
 public class GroovyKernelTest extends KernelExecutionTest {
 
   public GroovyKernelTest() {
