@@ -32,8 +32,8 @@ sourceSets {
 }
 
 dependencies {
-    api project(':base-api')
-    provided project(':doclet')
+    api project(':matter-base-api')
+    provided project(':matter-doclet')
     api group: 'com.opencsv', name: 'opencsv', version: '3.10'
     api group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.6.5'
     api group: 'com.github.jupyter', name: 'jvm-repr', version: '0.3.1'
@@ -51,7 +51,7 @@ dependencies {
     implementation group: 'org.assertj', name: 'assertj-core', version: '3.6.1'
 
     testImplementation group: 'org.reflections', name: 'reflections', version: '0.9.10'
-    testImplementation project(':base-test')
+    testImplementation project(':matter-base-test')
 }
 
 def gitGetHash() {

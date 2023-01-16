@@ -28,12 +28,12 @@ configurations {
 }
 
 dependencies {
-    implementation project(":base")
+    implementation project(":matter-base")
     implementation "org.codehaus.groovy:groovy:$groovy"
     implementation group: 'org.antlr', name: 'antlr4-runtime', version: "$antlr4Version"
     antlr group: 'org.antlr', name: 'antlr4', version: "$antlr4Version"
-    runtimetools project(":runtimetools")
-    testImplementation project(":base-test")
+    runtimetools project(":matter-runtimetools")
+    testImplementation project(":matter-base-test")
 }
 
 task antlr4_groovy_lexer(type: JavaExec) {

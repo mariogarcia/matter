@@ -13,4 +13,4 @@ task prepareDistribution() {
 }
 
 copyDockerResources.dependsOn('copyPythonResources')
-copyPythonResources.dependsOn(':groovy:build')
+copyPythonResources.dependsOn(':matter-groovy:build')
