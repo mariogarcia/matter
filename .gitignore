@@ -34,8 +34,8 @@ GroovyParserBaseListener.java
 GroovyParserListener.java
 
 # groovy-dist module
-**/groovy-dist/beakerx_groovy/kernel/*
-**/groovy-dist/dist
+dist/beakerx_groovy/kernel/*
+dist/dist
 
 # Others
 
