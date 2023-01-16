@@ -17,14 +17,3 @@ dependencies {
     api group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId 'com.twosigma'
-            artifactId 'beakerx-kernel-base-api'
-            version "$beakerxVersion"
-            from components.java
-        }
-    }
-}

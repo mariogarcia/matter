@@ -13,26 +13,24 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-apply plugin: 'application'
-
-mainClassName = 'com.twosigma.beakerx.groovy.kernel.Groovy'
+plugins {
+    id 'application'
+}
 
 ext {
     antlr4Version = "4.5"
 }
 
 configurations {
-    runtimetools
     antlr
+    runtimetools
 }
 
 dependencies {
     implementation project(":base")
-    implementation "org.codehaus.groovy:groovy:3.0.3"
-
+    implementation "org.codehaus.groovy:groovy:$groovy"
     implementation group: 'org.antlr', name: 'antlr4-runtime', version: "$antlr4Version"
     antlr group: 'org.antlr', name: 'antlr4', version: "$antlr4Version"
-
     runtimetools project(":runtimetools")
     testImplementation project(":base-test")
 }
@@ -40,60 +38,40 @@ dependencies {
 task antlr4_groovy_lexer(type: JavaExec) {
     main = "org.antlr.v4.Tool"
     workingDir = "src/main/antlr4/"
-    args = ["GroovyLexer.g4", "-o", "../java/com/twosigma/beakerx/groovy/autocomplete", "-listener", "-no-visitor", "-package", "com.twosigma.beakerx.groovy.autocomplete", "-encoding", "UTF-8"]
     classpath = configurations.antlr
+    args = [
+        "GroovyLexer.g4",
+        "-o", "../java/com/twosigma/beakerx/groovy/autocomplete",
+        "-listener",
+        "-no-visitor",
+        "-package", "com.twosigma.beakerx.groovy.autocomplete",
+        "-encoding", "UTF-8"
+    ]
 }
 task antlr4_groovy_parser(type: JavaExec) {
     main = "org.antlr.v4.Tool"
     workingDir = "src/main/antlr4/"
-    args = ["GroovyParser.g4", "-o", "../java/com/twosigma/beakerx/groovy/autocomplete", "-listener", "-no-visitor", "-package", "com.twosigma.beakerx.groovy.autocomplete", "-encoding", "UTF-8"]
     classpath = configurations.antlr
+    args = [
+        "GroovyParser.g4",
+        "-o", "../java/com/twosigma/beakerx/groovy/autocomplete",
+        "-listener",
+        "-no-visitor",
+        "-package", "com.twosigma.beakerx.groovy.autocomplete",
+        "-encoding", "UTF-8"
+    ]
 }
-compileJava.dependsOn antlr4_groovy_lexer
-compileJava.dependsOn antlr4_groovy_parser
+
+application {
+    mainClassName = 'com.twosigma.beakerx.groovy.kernel.Groovy'
+}
+
+compileJava {
+    dependsOn('antlr4_groovy_lexer', 'antlr4_groovy_parser')
+}
 
 jar {
     manifest {
         attributes "Main-Class": "$mainClassName"
     }
 }
-
-clean.doFirst {
-    delete "${rootDir}/groovy-dist/beakerx_groovy/kernel"
-}
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId 'com.twosigma'
-            artifactId 'beakerx-kernel-groovy'
-            version "$beakerxVersion"
-            from components.java
-        }
-    }
-}
-
-distZip.dependsOn installDist
-
-task copyDependenciesToJar(type: Copy) {
-    from configurations.runtimetools
-    from jar
-    into new File('../groovy-dist/beakerx_groovy/kernel/', 'lib')
-}
-jar.finalizedBy copyDependenciesToJar
-
-task copyStaticContent(type: Copy) {
-    from '.'
-    into new File('../groovy-dist/beakerx_groovy/kernel/', '')
-    include '*.png'
-    include 'kernel.json'
-}
-jar.finalizedBy copyStaticContent
-
-task copyRuntimetools(type: Copy) {
-    from configurations.runtimetools
-    from jar
-    into new File('../groovy-dist/beakerx_groovy/kernel/', 'ext')
-    include 'beakerx-runtimetools*.jar'
-}
-jar.finalizedBy copyRuntimetools
