@@ -54,17 +54,6 @@ dependencies {
     testImplementation project(':base-test')
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId 'com.twosigma'
-            artifactId 'beakerx-kernel-base'
-            version "$beakerxVersion"
-            from components.java
-        }
-    }
-}
-
 def gitGetHash() {
     def name = "git log --pretty=format:%h -n 1".execute().text.trim()
     return name
