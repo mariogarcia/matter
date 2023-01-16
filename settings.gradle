@@ -19,6 +19,7 @@ buildscript {
     }
     dependencies {
         classpath 'org.kordamp.gradle:settings-gradle-plugin:0.47.0'
+        classpath 'com.bmuschko:gradle-docker-plugin:9.1.0'
     }
 }
 apply plugin: 'org.kordamp.gradle.settings'

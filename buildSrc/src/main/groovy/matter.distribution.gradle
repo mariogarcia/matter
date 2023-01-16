@@ -1,0 +1,16 @@
+task copyPythonResources(type: Copy) {
+    from "$rootDir/dist/python"
+    into new File("$rootDir/build/dist/matter/", '')
+}
+
+task copyDockerResources(type: Copy) {
+    from "$rootDir/dist/docker"
+    into new File("$rootDir/build/dist/matter/", '')
+}
+
+task prepareDistribution() {
+    dependsOn('copyDockerResources')
+}
+
+copyDockerResources.dependsOn('copyPythonResources')
+copyPythonResources.dependsOn(':groovy:build')
