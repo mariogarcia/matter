@@ -13,13 +13,13 @@
 # limitations under the License.
 import argparse
 import sys
-import beakerx_groovy
+import matter_groovy
 from notebook import notebookapp as app
 from .install import install, uninstall
 
 
 def install_subparser(subparser):
-    install_parser = subparser.add_parser('install', help='installs BeakerX Groovy Kernel extensions')
+    install_parser = subparser.add_parser('install', help='installs Matter Groovy Kernel extensions')
     install_parser.set_defaults(func=install)
     install_parser.add_argument("--prefix",
                                 help="location of the environment to install into",
@@ -31,7 +31,7 @@ def install_subparser(subparser):
 
 
 def uninstall_subparser(subparser):
-    uninstall_parser = subparser.add_parser('uninstall', help='uninstalls BeakerX Groovy Kernel extensions')
+    uninstall_parser = subparser.add_parser('uninstall', help='uninstalls Matter Groovy Kernel extensions')
     uninstall_parser.set_defaults(func=uninstall)
     uninstall_parser.add_argument("--prefix",
                                   help="location of the environment to uninstall from",
@@ -47,7 +47,7 @@ def run_jupyter(jupyter_commands):
 
 def init_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--version', action='version', version=beakerx_groovy.__version__)
+    parser.add_argument('--version', action='version', version=matter_groovy.__version__)
     parser.set_defaults(func=run_jupyter)
 
     subparsers = parser.add_subparsers()

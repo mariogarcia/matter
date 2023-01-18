@@ -1,39 +1,32 @@
-/*
- *  Copyright 2020 TWO SIGMA OPEN SOURCE, LLC
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
 plugins {
     id 'application'
-    id 'matter.copy-groovy-dist-files'
+    id 'matter.distribution'
+    id 'com.bmuschko.docker-remote-api'
 }
 
-ext {
-    antlr4Version = "4.5"
-}
-
-configurations {
-    antlr
-    runtimetools
-}
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 
 dependencies {
     implementation project(":matter-base")
     implementation "org.codehaus.groovy:groovy:$groovy"
-    implementation group: 'org.antlr', name: 'antlr4-runtime', version: "$antlr4Version"
-    antlr group: 'org.antlr', name: 'antlr4', version: "$antlr4Version"
+    implementation "org.antlr:antlr4-runtime:$antlr4Version"
+    antlr "org.antlr:antlr4:$antlr4Version"
     runtimetools project(":matter-runtimetools")
     testImplementation project(":matter-base-test")
+}
+
+application {
+    mainClassName = 'com.twosigma.beakerx.groovy.kernel.Groovy'
+}
+
+compileJava {
+    dependsOn('antlr4_groovy_lexer', 'antlr4_groovy_parser')
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
 }
 
 task antlr4_groovy_lexer(type: JavaExec) {
@@ -63,16 +56,9 @@ task antlr4_groovy_parser(type: JavaExec) {
     ]
 }
 
-application {
-    mainClassName = 'com.twosigma.beakerx.groovy.kernel.Groovy'
-}
-
-compileJava {
-    dependsOn('antlr4_groovy_lexer', 'antlr4_groovy_parser')
-}
-
-jar {
-    manifest {
-        attributes "Main-Class": "$mainClassName"
-    }
+task buildMatterDockerImage(type: DockerBuildImage, dependsOn: 'build') {
+    group("build")
+    description("Creates a Docker image with Matter Groovy Kernel installed")
+    inputDir = file("$buildDir/dist/")
+    images.add("$group/matter:$version")
 }

@@ -25,32 +25,23 @@ from setupbase import (
 )
 
 
-cmdclass = create_cmdclass(develop_wrappers=[
-    'java'
-], distribute_wrappers=[
-    'java'
-])
-
+cmdclass = create_cmdclass(develop_wrappers=['java'], distribute_wrappers=['java'])
 cmdclass['java'] = run_gradle(cmd='install', skip_tests=False)
 
 setup_args = dict(
-    name='beakerx_kernel_groovy',
-    description='BeakerX: Beaker Extensions for Jupyter Notebook',
-    long_description='BeakerX: Beaker Extensions for Jupyter Notebook',
-    version=get_version(os.path.join('beakerx_groovy', '_version.py')),
+    name='matter_kernel_groovy',
+    description='Matter: Groovy Extensions for Jupyter Notebook',
+    long_description='Matter: Groovy Extensions for Jupyter Notebook',
+    version=get_version(os.path.join('matter_groovy', '_version.py')),
     author='Two Sigma Open Source, LLC',
-    author_email='beakerx-feedback@twosigma.com',
-    url='http://beakerx.com',
+    author_email='',
+    url='https://grooviter.github.io/matter',
     keywords=[
         'ipython',
         'jupyter',
         'widgets',
         'java',
-        'clojure',
-        'groovy',
-        'scala',
-        'kotlin',
-        'sql',
+        'groovy'
     ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -66,11 +57,11 @@ setup_args = dict(
     ],
     entry_points={
         'console_scripts': [
-            'beakerx_kernel_groovy = beakerx_groovy:run'
+            'matter_kernel_groovy = matter_groovy:run'
         ]
     },
     package_data={
-        'beakerx_groovy': [
+        'matter_groovy': [
             'kernel/*/kernel.json'
         ]
     },

@@ -15,7 +15,6 @@
  */
 plugins {
     id 'org.kordamp.gradle.java-project' version '0.47.0'
-    id 'matter.distribution'
 }
 
 config {

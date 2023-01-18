@@ -1,4 +1,0 @@
-recursive-include beakerx_groovy/kernel *
-
-include setupbase.py
-

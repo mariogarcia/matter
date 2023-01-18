@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-'''Installs BeakerX into a Jupyter and Python environment.'''
+'''Installs Matter into a Jupyter and Python environment.'''
 
 import json
 import os
@@ -30,12 +30,12 @@ def _kernel_name():
 
 def _base_classpath_for(kernel):
     return pkg_resources.resource_filename(
-        'beakerx_groovy', os.path.join('kernel', kernel))
+        'matter_groovy', os.path.join('kernel', kernel))
 
 
 def _classpath():
     return pkg_resources.resource_filename(
-        'beakerx_groovy', os.path.join('kernel', 'lib', '*'))
+        'matter_groovy', os.path.join('kernel', 'lib', '*'))
 
 
 def _copy_tree(src, dst):
@@ -47,7 +47,7 @@ def _copy_tree(src, dst):
 def _install_kernels(args):
     base_classpath = _classpath()
     classpath = json.dumps(os.pathsep.join([base_classpath]))
-    template = pkg_resources.resource_string('beakerx_groovy', os.path.join('kernel', 'kernel.json'))
+    template = pkg_resources.resource_string('matter_groovy', os.path.join('kernel', 'kernel.json'))
     contents = Template(template.decode()).substitute(PATH=classpath)
 
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -63,7 +63,7 @@ def _install_kernels(args):
 
     if args.lab != None:
         install_cmd = [
-            'jupyter', 'kernelspec', 'install', '--replace', '--name', _kernel_name(), '/opt/conda/envs/beakerx/share/jupyter/kernels/groovy'
+            'jupyter', 'kernelspec', 'install', '--replace', '--name', _kernel_name(), '/opt/conda/envs/matter/share/jupyter/kernels/groovy'
         ]
         subprocess.check_call(install_cmd)
 

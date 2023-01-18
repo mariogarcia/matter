@@ -1,16 +1,46 @@
-task copyPythonResources(type: Copy) {
-    from "$rootDir/dist/python"
-    into new File("$rootDir/build/dist/matter/", '')
+configurations {
+    antlr
+    runtimetools
 }
 
-task copyDockerResources(type: Copy) {
-    from "$rootDir/dist/docker"
-    into new File("$rootDir/build/dist/matter/", '')
+tasks.register("copyDistDependencies", Copy) {
+    from configurations.runtimeClasspath
+    from jar
+    into new File("$buildDir/dist/matter/kernel/", 'lib')
 }
 
-task prepareDistribution() {
+tasks.register("copyDistStaticContent", Copy) {
+    from 'dist/kernel'
+    into new File("$buildDir/dist/matter/kernel/", '')
+    include '*.png'
+    include 'kernel.json'
+}
+
+tasks.register("copyDistRuntimetools", Copy) {
+    from configurations.runtimetools
+    from jar
+    into new File("$buildDir/dist/matter/kernel/", 'ext')
+    include 'matter-runtimetools*.jar'
+}
+
+tasks.register("copyPythonResources", Copy) {
+    from "dist/python"
+    into new File("$buildDir/dist/matter/", '')
+}
+
+tasks.register("copyDockerResources", Copy) {
+    from "dist/docker"
+    into new File("$buildDir/dist/", '')
+}
+
+tasks.register("prepareDistribution") {
     dependsOn('copyDockerResources')
 }
 
-copyDockerResources.dependsOn('copyPythonResources')
-copyPythonResources.dependsOn(':matter-groovy:build')
+distZip.dependsOn installDist
+
+jar.finalizedBy copyDistDependencies
+jar.finalizedBy copyDistStaticContent
+jar.finalizedBy copyDistRuntimetools
+jar.finalizedBy copyDockerResources
+jar.finalizedBy copyPythonResources

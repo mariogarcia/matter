@@ -1,4 +1,4 @@
-name: beakerx_groovy_kernel
+name: matter_groovy_kernel
 channels:
   - conda-forge
 dependencies:
@@ -8,4 +8,4 @@ dependencies:
   - ipywidgets>=7.5.1
   - maven
   - py4j
-#  - openjdk=11.0.1
+  - openjdk=11.0.1
