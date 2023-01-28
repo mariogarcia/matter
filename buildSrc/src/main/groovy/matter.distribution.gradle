@@ -6,12 +6,12 @@ configurations {
 tasks.register("copyDistDependencies", Copy) {
     from configurations.runtimeClasspath
     from jar
-    into new File("$buildDir/dist/matter/kernel/", 'lib')
+    into new File("$buildDir/dist/matter/beakerx_groovy/kernel/", 'lib')
 }
 
 tasks.register("copyDistStaticContent", Copy) {
     from 'dist/kernel'
-    into new File("$buildDir/dist/matter/kernel/", '')
+    into new File("$buildDir/dist/matter/beakerx_groovy/kernel/", '')
     include '*.png'
     include 'kernel.json'
 }
@@ -19,7 +19,7 @@ tasks.register("copyDistStaticContent", Copy) {
 tasks.register("copyDistRuntimetools", Copy) {
     from configurations.runtimetools
     from jar
-    into new File("$buildDir/dist/matter/kernel/", 'ext')
+    into new File("$buildDir/dist/matter/beakerx_groovy/kernel/", 'ext')
     include 'matter-runtimetools*.jar'
 }
 

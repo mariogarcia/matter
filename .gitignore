@@ -16,14 +16,14 @@ __pycache__/
 *.egg-info/
 
 # base module
-**/base/src/main/resources/build_time
-**/base/src/main/resources/hash
-beakerx_inspect.json
+**/modules/matter-base/src/main/resources/build_time
+**/modules/matter-base/src/main/resources/hash
+matter_inspect.json
 
 # doclet module
 **/doclet/bin/
 **/doclet/out/
-**/doclet/beakerx_inspect.json
+**/doclet/matter_inspect.json
 
 # groovy module
 GroovyLexer.java
@@ -34,7 +34,7 @@ GroovyParserBaseListener.java
 GroovyParserListener.java
 
 # groovy-dist module
-modules/matter-groovy/dist/python/beakerx_groovy/kernel/*
+modules/matter-groovy/dist/python/matter_groovy/kernel/*
 modules/matter-groovy/dist/dist
 
 # Others

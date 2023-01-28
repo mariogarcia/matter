@@ -40,7 +40,7 @@ public class BxInspect implements Inspect {
 
   private static final String COLOR_RED = "\u001B[31m";
   private static final String COLOR_RESET = "\033[0m";
-  public static final String BEAKERX_INSPECT_JSON = "beakerx_inspect.json";
+  public static final String MATTER_INSPECT_JSON = "matter_inspect.json";
 
   private String inspectData;
   private InputStream inspectDataStream;
@@ -72,7 +72,7 @@ public class BxInspect implements Inspect {
   }
 
   public static InputStream getInspectFile() {
-    String inputFile = "jar:file:" + pathToInspectionFile(BxInspect.class).toString() + "!/" + BEAKERX_INSPECT_JSON;
+    String inputFile = "jar:file:" + pathToInspectionFile(BxInspect.class).toString() + "!/" + MATTER_INSPECT_JSON;
     try {
       URL inputURL = new URL(inputFile);
       JarURLConnection conn = (JarURLConnection) inputURL.openConnection();

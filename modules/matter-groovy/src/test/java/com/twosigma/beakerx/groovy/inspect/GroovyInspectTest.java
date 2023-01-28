@@ -54,7 +54,7 @@ public class GroovyInspectTest {
     public static void setUpClass() throws Exception {
         groovyEvaluator = TestGroovyEvaluator.groovyEvaluator(
                 new BxInspect(
-                        new FileInputStream("./src/test/resources/beakerx_inspect_test.json"))
+                        new FileInputStream("./src/test/resources/matter_inspect_test.json"))
         );
     }
 

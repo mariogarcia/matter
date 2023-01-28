@@ -33,7 +33,7 @@ public class SerializeInspect {
     }
     public void saveToFile(String json){
         try {
-            File file = new File("beakerx_inspect.json");
+            File file = new File("matter_inspect.json");
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write(json);
             fileWriter.flush();

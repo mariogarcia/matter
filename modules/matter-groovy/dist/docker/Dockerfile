@@ -1,18 +1,12 @@
-FROM jupyter/base-notebook
+FROM jupyter/base-notebook as build
 USER root
-# RUN apt-get update && apt-get install -y openjdk-11-jre
-#COPY ./base-dependencies/ /root/.m2/repository/
 COPY matter /tmp/matter/
 WORKDIR /tmp/matter/
-
-RUN /bin/bash -c "conda env create -n matter -f configuration.yml && . /opt/conda/etc/profile.d/conda.sh && conda activate matter && pip install -r requirements.txt --verbose && matter_kernel_groovy install --lab"
-
-# Fix permissions as root
+RUN apt-get update && apt-get install -y openjdk-11-jdk-headless
+RUN /bin/bash -c "conda env create -n beakerx --file configuration.yml && . /opt/conda/etc/profile.d/conda.sh && conda activate beakerx && pip install -r requirements.txt --verbose && beakerx_kernel_groovy install"
 USER root
 RUN fix-permissions /etc/jupyter/
-RUN fix-permissions /opt/conda/envs/matter/share/jupyter/kernels/groovy
+#RUN fix-permissions /opt/conda/share/jupyter/kernels/matter
 RUN fix-permissions /home/jovyan/.local/share/jupyter
-
-# Switch back to jovyan to avoid accidental container runs as root
-USER jovyan
+#USER jovyan
 WORKDIR $HOME

@@ -19,6 +19,7 @@ plugins {
 
 configurations {
     provided
+    customCompilation.extendsFrom(compilation, api, implementation)
 }
 
 sourceSets {
@@ -83,24 +84,23 @@ task prepareBuildVersion() {
 
 compileJava.dependsOn prepareBuildVersion
 
-
-//task jvmInspectJavaDoc(type: Javadoc) {
-//    source = sourceSets.main.allJava
-//    classpath = configurations.compile
-//    options.doclet = "com.twosigma.beakerx.doclet.BeakerxDoclet"
-//    options.docletpath = [file("../doclet/build/libs/doclet.jar")]
-//    options.addStringOption("subpackages", "com.twosigma.beakerx")
-//    options.addStringOption("sourcepath", "../base/src/main/java")
-//    options.addStringOption("encoding", "UTF-8")
-//}
+task jvmInspectJavaDoc(type: Javadoc) {
+    source = sourceSets.main.allJava
+    classpath = configurations.provided + configurations.customCompilation
+    options.doclet = "com.twosigma.beakerx.doclet.BeakerxDoclet"
+    options.docletpath = [file("../matter-doclet/build/libs/matter-doclet-${version}.jar")]
+    options.addStringOption("subpackages", "com.twosigma.beakerx")
+    options.addStringOption("sourcepath", "../matter-base/src/main/java")
+    options.addStringOption("encoding", "UTF-8")
+}
 
 
 task moveInspectJson(type: Copy) {
-    from("beakerx_inspect.json")
+    from("matter_inspect.json")
     into("build/resources/main")
 }
 
 // Check these tasks as jvmInspectJavaDoc fails to find configurations.compile
-//jvmInspectJavaDoc.finalizedBy moveInspectJson
-//compileJava.finalizedBy jvmInspectJavaDoc
+jvmInspectJavaDoc.finalizedBy moveInspectJson
+compileJava.finalizedBy jvmInspectJavaDoc
 
