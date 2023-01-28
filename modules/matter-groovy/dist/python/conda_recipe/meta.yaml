@@ -6,12 +6,11 @@ package:
   version: "{{ version }}"
 
 source:
-  git_url: https://github.com/twosigma/beakerx_kernel_groovy.git
+  git_url: https://github.com/mariogarcia/matter.git
   git_tag: master
 
 source:
-  #url: https://files.pythonhosted.org/packages/source/b/beakerx/{{ name }}-{{ version }}.tar.gz
-  url: file://Users/ildipo/src/beakerx_kernel_groovy/groovy-dist/dist/{{ name }}-{{ version }}.tar.gz
+  path: ..
 
 build:
   number: 1
@@ -28,4 +27,4 @@ requirements:
   - notebook >=5.7.4
   - ipywidgets >=7.0
   - widgetsnbextension
-  - openjdk=11.0.1
+  #- openjdk=11.0.1

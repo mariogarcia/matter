@@ -17,7 +17,6 @@
 import json
 import os
 import pkg_resources
-import shutil
 import subprocess
 import tempfile
 
@@ -28,20 +27,9 @@ def _kernel_name():
     return "groovy"
 
 
-def _base_classpath_for(kernel):
-    return pkg_resources.resource_filename(
-        'beakerx_groovy', os.path.join('kernel', kernel))
-
-
 def _classpath():
     return pkg_resources.resource_filename(
         'beakerx_groovy', os.path.join('kernel', 'lib', '*'))
-
-
-def _copy_tree(src, dst):
-    if os.path.exists(dst):
-        shutil.rmtree(dst)
-    shutil.copytree(src, dst)
 
 
 def _install_kernels(args):
@@ -69,7 +57,7 @@ def _uninstall_kernels():
     try:
         subprocess.check_call(uninstall_cmd)
     except subprocess.CalledProcessError:
-        pass  # uninstal_cmd prints the appropriate message
+        pass  # uninstall_cmd prints the appropriate message
 
 
 def install(args):
