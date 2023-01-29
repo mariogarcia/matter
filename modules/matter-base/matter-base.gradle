@@ -32,6 +32,10 @@ sourceSets {
     }
 }
 
+ext {
+    resourceDir = file("./src/main/resources")
+}
+
 dependencies {
     api project(':matter-base-api')
     provided project(':matter-doclet')
@@ -55,34 +59,26 @@ dependencies {
     testImplementation project(':matter-base-test')
 }
 
-def gitGetHash() {
-    def name = "git log --pretty=format:%h -n 1".execute().text.trim()
-    return name
+static String getGitHash() {
+    return "git log --pretty=format:%h -n 1".execute().text.trim()
 }
 
-def resourceDir = file("./src/main/resources")
-
-def gitGetCommitHash() {
+static String getGitCommitHash() {
     return "git rev-list --tags --max-count=1".execute().text.trim()
 }
 
-def gitGetLatestTagVersion() {
-    def gitLatestTag = "git describe --tags " + gitGetCommitHash() + ""
-    return gitLatestTag.execute().text.trim()
+static String getGitLatestTagVersion() {
+    return "git describe --tags ${getGitCommitHash()}".execute().text.trim()
 }
-
-def mainDir = file("../../")
 
 task prepareBuildVersion() {
     doLast {
-        file("$resourceDir/version").write(gitGetLatestTagVersion())
-        file("$resourceDir/hash").write(gitGetHash())
+        file("$resourceDir/version").write(getGitLatestTagVersion())
+        file("$resourceDir/hash").write(getGitHash())
         file("$resourceDir/build_time").write(new Date().format("yyyy-MM-dd HH:mm z"))
-        file("$mainDir/VERSION").write(gitGetLatestTagVersion())
+        file("$rootDir/VERSION").write(getGitLatestTagVersion())
     }
 }
-
-compileJava.dependsOn prepareBuildVersion
 
 task jvmInspectJavaDoc(type: Javadoc) {
     source = sourceSets.main.allJava
@@ -96,12 +92,12 @@ task jvmInspectJavaDoc(type: Javadoc) {
 
 task moveInspectJson(type: Copy) {
     from("$projectDir/matter_inspect.json")
-    into("$buildDir/resources/main")
-
+    into(resourceDir)
     doLast {
         file("$projectDir/matter_inspect.json").delete()
     }
 }
 
+compileJava.dependsOn prepareBuildVersion
 compileJava.finalizedBy jvmInspectJavaDoc
 jvmInspectJavaDoc.finalizedBy moveInspectJson
