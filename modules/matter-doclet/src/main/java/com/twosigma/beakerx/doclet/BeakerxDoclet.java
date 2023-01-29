@@ -33,7 +33,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BeakerxDoclet extends StandardDoclet {
-
   @Override
   public boolean run(DocletEnvironment docEnv) {
     HashMap<String, ClassInspect> inspects = new HashMap<>();

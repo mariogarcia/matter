@@ -18,7 +18,7 @@ __pycache__/
 # base module
 **/modules/matter-base/src/main/resources/build_time
 **/modules/matter-base/src/main/resources/hash
-matter_inspect.json
+**/matter_inspect.json
 
 # doclet module
 **/doclet/bin/

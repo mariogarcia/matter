@@ -3,15 +3,11 @@ package:
   version: "2.0.0"
 
 source:
-  git_url: https://github.com/mariogarcia/matter.git
-  git_tag: master
-
-source:
   path: ..
 
 build:
-  number: 1
-  script: pip install --no-deps .
+  number: 0
+  script: "{{ PYTHON }} -m pip install --no-deps --force-reinstall -vv ."
   entry_points:
     - beakerx_kernel_groovy = beakerx_groovy:run
 

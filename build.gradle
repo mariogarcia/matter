@@ -15,7 +15,10 @@
  */
 plugins {
     id 'org.kordamp.gradle.java-project' version '0.47.0'
+    id 'com.bmuschko.docker-remote-api'
 }
+
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 
 config {
     release = (rootProject.findProperty('release') ?: false).toBoolean()  
@@ -58,6 +61,13 @@ allprojects {
         jcenter()
         maven { url 'https://jitpack.io' }
     }
+    config {
+        docs {
+            javadoc {
+                enabled = false
+            }
+        }
+    }
 }
 
 subprojects {
@@ -65,4 +75,24 @@ subprojects {
         sourceCompatibility = "1.8"
         targetCompatibility = "1.8"
     }
+}
+
+tasks.register("distributionCopyPython", Copy) {
+    group("distribution")
+    from fileTree('dist')
+    into file("$buildDir/dist/")
+}
+
+tasks.register("distributionCopyJars", Copy) {
+    group("distribution")
+    dependsOn(':matter-base:build', ':matter-groovy:build')
+    from fileTree("$rootDir/modules/matter-groovy/build/dist/kernel")
+    into file("$buildDir/dist/beakerx_groovy/kernel")
+}
+
+tasks.register("distributionDocker", DockerBuildImage) {
+    group("distribution")
+    dependsOn('distributionCopyPython', 'distributionCopyJars')
+    inputDir = file("$buildDir/dist")
+    images.add("${project.properties.group}/matter:$version")
 }

@@ -1,10 +1,11 @@
 plugins {
     id 'application'
-    id 'matter.distribution'
-    id 'com.bmuschko.docker-remote-api'
 }
 
-import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+configurations {
+    antlr
+    runtimetools
+}
 
 dependencies {
     implementation project(":matter-base")
@@ -56,9 +57,20 @@ task antlr4_groovy_parser(type: JavaExec) {
     ]
 }
 
-task buildMatterDockerImage(type: DockerBuildImage, dependsOn: 'build') {
-    group("build")
-    description("Creates a Docker image with Matter Groovy Kernel installed")
-    inputDir = file("$buildDir/dist/")
-    images.add("$group/matter:$version")
+tasks.register("copyDistDependencies", Copy) {
+    from configurations.runtimeClasspath
+    from jar
+    into new File("$buildDir/dist/kernel/", 'lib')
 }
+
+tasks.register("copyDistRuntimetools", Copy) {
+    from configurations.runtimetools
+    from jar
+    into new File("$buildDir/dist/kernel/", 'ext')
+    include 'matter-runtimetools*.jar'
+}
+
+distZip.dependsOn installDist
+
+jar.finalizedBy copyDistDependencies
+jar.finalizedBy copyDistRuntimetools

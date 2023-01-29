@@ -75,10 +75,10 @@ def mainDir = file("../../")
 
 task prepareBuildVersion() {
     doLast {
-        new File(resourceDir, 'version').write(gitGetLatestTagVersion())
-        new File(resourceDir, 'hash').write(gitGetHash())
-        new File(resourceDir, 'build_time').write(new Date().format("yyyy-MM-dd HH:mm z"))
-        new File(mainDir, 'VERSION').write(gitGetLatestTagVersion())
+        file("$resourceDir/version").write(gitGetLatestTagVersion())
+        file("$resourceDir/hash").write(gitGetHash())
+        file("$resourceDir/build_time").write(new Date().format("yyyy-MM-dd HH:mm z"))
+        file("$mainDir/VERSION").write(gitGetLatestTagVersion())
     }
 }
 
@@ -90,17 +90,18 @@ task jvmInspectJavaDoc(type: Javadoc) {
     options.doclet = "com.twosigma.beakerx.doclet.BeakerxDoclet"
     options.docletpath = [file("../matter-doclet/build/libs/matter-doclet-${version}.jar")]
     options.addStringOption("subpackages", "com.twosigma.beakerx")
-    options.addStringOption("sourcepath", "../matter-base/src/main/java")
+    options.addStringOption("sourcepath", "$projectDir/src/main/java")
     options.addStringOption("encoding", "UTF-8")
 }
 
-
 task moveInspectJson(type: Copy) {
-    from("matter_inspect.json")
-    into("build/resources/main")
+    from("$projectDir/matter_inspect.json")
+    into("$buildDir/resources/main")
+
+    doLast {
+        file("$projectDir/matter_inspect.json").delete()
+    }
 }
 
-// Check these tasks as jvmInspectJavaDoc fails to find configurations.compile
-jvmInspectJavaDoc.finalizedBy moveInspectJson
 compileJava.finalizedBy jvmInspectJavaDoc
-
+jvmInspectJavaDoc.finalizedBy moveInspectJson
