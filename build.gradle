@@ -79,12 +79,14 @@ subprojects {
 
 tasks.register("distributionCopyPython", Copy) {
     group("distribution")
+    description("Copies Conda and Jupyter installation code to build dir")
     from fileTree('dist')
     into file("$buildDir/dist/")
 }
 
 tasks.register("distributionCopyJars", Copy) {
     group("distribution")
+    description("Copies Groovy kernel jar libs to build dir")
     dependsOn(':matter-base:build', ':matter-groovy:build')
     from fileTree("$rootDir/modules/matter-groovy/build/dist/kernel")
     into file("$buildDir/dist/beakerx_groovy/kernel")
@@ -92,6 +94,7 @@ tasks.register("distributionCopyJars", Copy) {
 
 tasks.register("distributionDocker", DockerBuildImage) {
     group("distribution")
+    description("Creates a jupyter image with Groovy kernel installed in it")
     dependsOn('distributionCopyPython', 'distributionCopyJars')
     inputDir = file("$buildDir/dist")
     images.add("${project.properties.group}/matter:$version")
