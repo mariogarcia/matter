@@ -33,7 +33,7 @@ sourceSets {
 }
 
 ext {
-    resourceDir = file("./src/main/resources")
+    resourceDir = file("$projectDir/src/main/resources")
 }
 
 dependencies {
@@ -90,9 +90,13 @@ task jvmInspectJavaDoc(type: Javadoc) {
     options.addStringOption("encoding", "UTF-8")
 }
 
-task moveInspectJson(type: Copy) {
-    from("$projectDir/matter_inspect.json")
-    into(resourceDir)
+task moveInspectJson() {
+    doFirst {
+        copySpec {
+            from("$projectDir/matter_inspect.json")
+            into("$buildDir/resources/main")
+        }
+    }
     doLast {
         file("$projectDir/matter_inspect.json").delete()
     }
@@ -100,4 +104,4 @@ task moveInspectJson(type: Copy) {
 
 compileJava.dependsOn prepareBuildVersion
 compileJava.finalizedBy jvmInspectJavaDoc
-jvmInspectJavaDoc.finalizedBy moveInspectJson
+jar.dependsOn moveInspectJson
