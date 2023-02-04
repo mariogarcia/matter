@@ -16,9 +16,14 @@
 
 package com.twosigma.beakerx.table;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.std.StringSerializer;
 import com.twosigma.beakerx.chart.Color;
 import com.twosigma.beakerx.chart.serializer.ColorSerializer;
 import com.twosigma.beakerx.jvm.serialization.DateSerializer;
@@ -47,7 +52,9 @@ import com.twosigma.beakerx.table.serializer.TimeStringFormatSerializer;
 import com.twosigma.beakerx.table.serializer.UniqueEntriesHighlighterSerializer;
 import com.twosigma.beakerx.table.serializer.ValueHighlighterSerializer;
 import com.twosigma.beakerx.table.serializer.ValueStringFormatSerializer;
+import org.codehaus.groovy.runtime.GStringImpl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -110,6 +117,13 @@ public class TableDisplayToJson {
     module.addSerializer(ValueHighlighter.class, new ValueHighlighterSerializer());
     module.addSerializer(Date.class, new DateSerializer());
     module.addSerializer(Color.class, new ColorSerializer());
+    module.addSerializer(GStringImpl.class, new JsonSerializer<GStringImpl>() {
+      @Override
+      public void serialize(GStringImpl value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+        gen.writeString(value.toString());
+      }
+    });
+
     return module;
   }
 
