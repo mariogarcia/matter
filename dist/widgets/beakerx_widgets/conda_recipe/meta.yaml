@@ -1,0 +1,37 @@
+{% set name = "beakerx_widgets" %}
+{% set fname = "beakerx" %}
+{% set version = "2.1.0" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  git_url: https://github.com/twosigma/beakerx_widgets.git
+  git_tag: master
+
+source:
+  #url: https://files.pythonhosted.org/packages/source/b/beakerx/{{ name }}-{{ version }}.tar.gz
+  url: file:///Users/ildipo/src/beakerx_widgets/beakerx_widgets/dist/{{ fname }}-{{ version }}.tar.gz
+
+build:
+  number: 1
+  script: pip install --no-deps .
+  entry_points:
+  - beakerx = beakerx:run
+
+requirements:
+  build:
+  - python
+  - pip
+  run:
+  - beakerx_base={{ version }}
+  - python >=3
+  - notebook >=5.7.4
+  - ipywidgets >=7.0
+  - widgetsnbextension
+  - pyspark
+  - bottle
+  - requests
+  - numpy
+  - pandas

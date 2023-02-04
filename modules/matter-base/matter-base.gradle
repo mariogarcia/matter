@@ -47,6 +47,8 @@ dependencies {
     api group: 'org.apache.maven.shared', name: 'maven-invoker', version: '3.0.0'
     api group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
 
+    api group: "org.codehaus.groovy", name: "groovy", version: "$groovy"
+
     api group: 'org.apache.httpcomponents', name: 'fluent-hc', version: '4.5.5'
     api 'io.javalin:javalin:1.7.0'
     api group: "org.zeromq", name: "jeromq", version: "0.3.5"

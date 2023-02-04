@@ -89,7 +89,7 @@ tasks.register("distributionCopyJars", Copy) {
     description("Copies Groovy kernel jar libs to build dir")
     dependsOn(':matter-base:build', ':matter-groovy:build')
     from fileTree("$rootDir/modules/matter-groovy/build/dist/kernel")
-    into file("$buildDir/dist/beakerx_groovy/kernel")
+    into file("$buildDir/dist/groovy/beakerx_groovy/kernel")
 }
 
 tasks.register("distributionDocker", DockerBuildImage) {
