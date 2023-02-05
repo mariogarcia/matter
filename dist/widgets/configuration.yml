@@ -4,6 +4,7 @@ channels:
 dependencies:
   - bottle
   - ipywidgets>=7.5.1,<8
+  - yarn
   - pandas
   - py4j
   #- pyspark
