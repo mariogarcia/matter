@@ -16,38 +16,54 @@
 
 import json
 import os
+import fnmatch
 import pkg_resources
 import subprocess
 import tempfile
 
 from string import Template
 
+BEAKERX_GROOVY_PKG='beakerx_groovy'
+KERNEL_DIR='kernel'
 
 def _kernel_name():
     return "groovy"
 
 
 def _classpath():
-    return pkg_resources.resource_filename(
-        'beakerx_groovy', os.path.join('kernel', 'lib', '*'))
+    return pkg_resources.resource_filename(BEAKERX_GROOVY_PKG, os.path.join(KERNEL_DIR, 'lib', '*'))
 
 
 def _install_kernels(args):
-    base_classpath = _classpath()
-    classpath = json.dumps(os.pathsep.join([base_classpath]))
-    template = pkg_resources.resource_string('beakerx_groovy', os.path.join('kernel', 'kernel.json'))
-    contents = Template(template.decode()).substitute(PATH=classpath)
-
     with tempfile.TemporaryDirectory() as tmpdir:
         kernel_dir = os.path.join(tmpdir, _kernel_name())
         os.mkdir(kernel_dir)
+
+        # MOVE LOGOS TO FINAL DESTINATION
+        _move_logos(
+            pkg_resources.resource_filename(BEAKERX_GROOVY_PKG, KERNEL_DIR),
+            kernel_dir
+        )
+
+        # CREATE kernel.json WITH FINAL DESTINATION
         with open(os.path.join(kernel_dir, 'kernel.json'), 'w') as f:
+            classpath = json.dumps(os.pathsep.join([_classpath()]))
+            template = pkg_resources.resource_string(BEAKERX_GROOVY_PKG, os.path.join(KERNEL_DIR, 'kernel.json'))
+            contents = Template(template.decode()).substitute(PATH=classpath)
             f.write(contents)
 
+        # INSTALL KERNEL
         install_cmd = [
             'jupyter', 'kernelspec', 'install', '--sys-prefix', '--replace', '--name', _kernel_name(), kernel_dir
         ]
+
         subprocess.check_call(install_cmd)
+
+
+def _move_logos(from_dir, to_dir):
+    for file in pkg_resources.resource_listdir(BEAKERX_GROOVY_PKG, KERNEL_DIR):
+        if fnmatch.fnmatch(file, '*.png'):
+            os.rename(os.path.join(from_dir, file), os.path.join(to_dir, file))
 
 
 def _uninstall_kernels():
