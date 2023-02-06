@@ -11,8 +11,7 @@ source:
   git_tag: master
 
 source:
-  #url: https://files.pythonhosted.org/packages/source/b/beakerx/{{ name }}-{{ version }}.tar.gz
-  url: file:///Users/ildipo/src/beakerx_widgets/beakerx_widgets/dist/{{ fname }}-{{ version }}.tar.gz
+  url: ..
 
 build:
   number: 1
