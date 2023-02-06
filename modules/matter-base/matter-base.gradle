@@ -92,13 +92,9 @@ task jvmInspectJavaDoc(type: Javadoc) {
     options.addStringOption("encoding", "UTF-8")
 }
 
-task moveInspectJson() {
-    doFirst {
-        copySpec {
-            from("$projectDir/matter_inspect.json")
-            into("$buildDir/resources/main")
-        }
-    }
+task moveInspectJson(type: Copy) {
+    from("$projectDir/matter_inspect.json")
+    into("$buildDir/resources/main")
     doLast {
         file("$projectDir/matter_inspect.json").delete()
     }
