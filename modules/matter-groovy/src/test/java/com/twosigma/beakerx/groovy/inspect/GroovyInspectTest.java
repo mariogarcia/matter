@@ -25,6 +25,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.FileInputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -54,7 +56,7 @@ public class GroovyInspectTest {
     public static void setUpClass() throws Exception {
         groovyEvaluator = TestGroovyEvaluator.groovyEvaluator(
                 new BxInspect(
-                        new FileInputStream("./src/test/resources/matter_inspect_test.json"))
+                        Files.newInputStream(Paths.get("./src/test/resources/matter_inspect_test.json")))
         );
     }
 
