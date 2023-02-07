@@ -1,0 +1,12 @@
+= Matter
+:revnumber: {version}
+:numbered:
+:imagesDir: images/
+:baseDir: ../../../../../modules
+:baseDirForChapters: ../../../../../../modules
+:stem:
+
+[quote]
+Matter is a Groovy Jupyter Kernel
+
+include::{includeDir}/chapter/intro.adoc[]
