@@ -1,0 +1,4 @@
+moduleName=Tablesaw Extensions
+moduleVersion=1.0.0-SNAPSHOT
+extensionClasses=com.github.grooviter.matter.tablesaw.TablesawExtensions
+staticExtensionClasses=

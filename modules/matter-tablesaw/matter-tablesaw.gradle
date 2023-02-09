@@ -1,0 +1,16 @@
+plugins {
+    id 'groovy'
+    id 'java-library'
+}
+
+dependencies {
+    api "org.codehaus.groovy:groovy:$groovy"
+    api "org.codehaus.groovy:groovy-json:$groovy"
+    api "org.codehaus.groovy:groovy-dateutil:$groovy"
+    api "tech.tablesaw:tablesaw-core:0.37.1"
+    testImplementation "org.spockframework:spock-core:2.4-M1-groovy-3.0"
+}
+
+test {
+    useJUnitPlatform()
+}
