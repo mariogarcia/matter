@@ -63,6 +63,10 @@ class TableExtensions {
         return source.addColumns(resolveColumn(key, replaceBy).append(replaceBy))
     }
 
+    static Table minus(Table source, Column<?> columnToDelete) {
+        return source.removeColumns(columnToDelete)
+    }
+
     private static <U> Column<U> byIndexRangeAndStringColumn(Table source, IntRange indexRange, String column) {
         return source.column(column).subset(indexRange as int[]) as Column<U>
     }

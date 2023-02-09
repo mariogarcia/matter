@@ -114,7 +114,7 @@ class TableExtensionsSpec extends BaseSpec {
         partial.size() == 3
     }
 
-    void 'add column by table[colName] = table[colName] operator'() {
+    void 'add column by table[colName] = column operator'() {
         given:
         Table partial = table.iloc(0..3, ["NAME"])
         Integer initColSize = partial.columnCount()
@@ -127,5 +127,17 @@ class TableExtensionsSpec extends BaseSpec {
 
         and:
         partial.columnCount() == initColSize + 1
+    }
+
+    void 'remove column by table[colName] - column operator'() {
+        given:
+        Table partial = table.iloc(0..3, ["ID", "NAME"])
+        Integer initColSize = partial.columnCount()
+
+        when:
+        partial = partial - partial["NAME"]
+
+        then:
+        partial.columnCount() == initColSize - 1
     }
 }
