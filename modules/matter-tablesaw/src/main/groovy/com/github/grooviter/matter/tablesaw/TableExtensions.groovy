@@ -21,16 +21,16 @@ import tech.tablesaw.columns.Column
  *
  * @since 1.0.0
  */
-class TablesawExtensions {
+class TableExtensions {
     static Table iloc(Table source, IntRange indexes, List cols) {
         return byIntRangeAndColumnList(source, indexes, cols)
     }
 
-    static Table iloc(Table source, IntRange indexRange, String column) {
+    static <U> Column<U> iloc(Table source, IntRange indexRange, String column) {
         return byIndexRangeAndStringColumn(source, indexRange, column)
     }
 
-    static Table iloc(Table source, IntRange indexRange, Integer column) {
+    static <U> Column<U> iloc(Table source, IntRange indexRange, Integer column) {
         return byIndexRangeAndIntegerColumn(source, indexRange, column)
     }
 
@@ -51,11 +51,11 @@ class TablesawExtensions {
         return source.rows(indexRange.toList() as int[]).select(columns*.name() as String[])
     }
 
-    static Table getAt(Table source, IntRange indexRange, String column) {
+    static <U> Column<U> getAt(Table source, IntRange indexRange, String column) {
         return byIndexRangeAndStringColumn(source, indexRange, column)
     }
 
-    static Table getAt(Table source, IntRange indexRange, Integer column) {
+    static <U> Column<U> getAt(Table source, IntRange indexRange, Integer column) {
         return byIndexRangeAndIntegerColumn(source, indexRange, column)
     }
 
@@ -63,12 +63,12 @@ class TablesawExtensions {
         return source.addColumns(resolveColumn(key, replaceBy).append(replaceBy))
     }
 
-    private static Table byIndexRangeAndStringColumn(Table source, IntRange indexRange, String column) {
-        return source.rows(indexRange.toList() as int[]).select(column)
+    private static <U> Column<U> byIndexRangeAndStringColumn(Table source, IntRange indexRange, String column) {
+        return source.column(column).subset(indexRange as int[]) as Column<U>
     }
 
-    private static byIndexRangeAndIntegerColumn(Table source, IntRange indexRange, Integer column) {
-        return source.rows(indexRange.toList() as int[]).select(source.column(column).name())
+    private static <U> Column<U> byIndexRangeAndIntegerColumn(Table source, IntRange indexRange, Integer column) {
+        return source.column(column).subset(indexRange as int[]) as Column<U>
     }
 
     private static Table byIntRangeAndColumnList(Table source, IntRange indexRange, List cols) {
