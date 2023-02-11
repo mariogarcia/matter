@@ -1,5 +1,6 @@
 package com.github.grooviter.matter.tablesaw
 
+import groovy.transform.CompileStatic
 import tech.tablesaw.api.BooleanColumn
 import tech.tablesaw.api.ColumnType
 import tech.tablesaw.api.DateColumn
@@ -15,12 +16,15 @@ import tech.tablesaw.api.Table
 import tech.tablesaw.api.TextColumn
 import tech.tablesaw.api.TimeColumn
 import tech.tablesaw.columns.Column
+import tech.tablesaw.selection.Selection
 
 /**
  * Groovy extensions for Tablesaw (https://github.com/jtablesaw/tablesaw)
  *
  * @since 1.0.0
  */
+@CompileStatic
+@SuppressWarnings('unused')
 class TableExtensions {
     static Table iloc(Table source, IntRange indexes, List cols) {
         return byIntRangeAndColumnList(source, indexes, cols)
@@ -46,6 +50,18 @@ class TableExtensions {
         return byIntRangeAndColumnList(source, indexRange, cols)
     }
 
+    static Table getAt(Table source, Selection filter) {
+        return source.where(filter)
+    }
+
+    static Table getAt(Table source, Selection filter, List cols) {
+        return source.where(filter).retainColumns(cols as String[])
+    }
+
+    static <U> Column <U> getAt(Table source, Selection filter, String col) {
+        return source.where(filter).column(col) as Column<U>
+    }
+
     static Table getAt(Table source, IntRange indexRange, IntRange columnIndex) {
         List<Column<?>> columns = source.columns(columnIndex.toList() as int[])
         return source.rows(indexRange.toList() as int[]).select(columns*.name() as String[])
@@ -60,7 +76,7 @@ class TableExtensions {
     }
 
     static <U> Table putAt(Table source, String key, Column<U> replaceBy) {
-        return source.addColumns(resolveColumn(key, replaceBy).append(replaceBy))
+        return source.addColumns(resolveColumn(key, replaceBy).append(replaceBy) as Column<?>[])
     }
 
     static Table minus(Table source, Column<?> columnToDelete) {
@@ -93,20 +109,20 @@ class TableExtensions {
 
     private static <T> Column<T> resolveColumn(String name, Column<T> source) {
         switch(source.type()) {
-            case ColumnType.STRING: return StringColumn.create(name)
-            case ColumnType.INTEGER: return IntColumn.create(name)
-            case ColumnType.DOUBLE: return DoubleColumn.create(name)
-            case ColumnType.BOOLEAN: return BooleanColumn.create(name)
-            case ColumnType.FLOAT: return FloatColumn.create(name)
-            case ColumnType.INSTANT: return InstantColumn.create(name)
-            case ColumnType.LOCAL_DATE: return DateColumn.create(name)
-            case ColumnType.LOCAL_DATE_TIME: return DateTimeColumn.create(name)
-            case ColumnType.LOCAL_TIME: return TimeColumn.create(name)
-            case ColumnType.LONG: return LongColumn.create(name)
-            case ColumnType.SHORT: return ShortColumn.create(name)
-            case ColumnType.TEXT: return TextColumn.create(name)
+            case ColumnType.STRING: return StringColumn.create(name) as Column<T>
+            case ColumnType.INTEGER: return IntColumn.create(name) as Column<T>
+            case ColumnType.DOUBLE: return DoubleColumn.create(name) as Column<T>
+            case ColumnType.BOOLEAN: return BooleanColumn.create(name) as Column<T>
+            case ColumnType.FLOAT: return FloatColumn.create(name) as Column<T>
+            case ColumnType.INSTANT: return InstantColumn.create(name) as Column<T>
+            case ColumnType.LOCAL_DATE: return DateColumn.create(name) as Column<T>
+            case ColumnType.LOCAL_DATE_TIME: return DateTimeColumn.create(name) as Column<T>
+            case ColumnType.LOCAL_TIME: return TimeColumn.create(name) as Column<T>
+            case ColumnType.LONG: return LongColumn.create(name) as Column<T>
+            case ColumnType.SHORT: return ShortColumn.create(name) as Column<T>
+            case ColumnType.TEXT: return TextColumn.create(name) as Column<T>
             default:
-                return StringColumn.create(name)
+                return StringColumn.create(name) as Column<T>
         }
     }
 }

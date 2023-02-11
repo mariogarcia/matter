@@ -140,4 +140,29 @@ class TableExtensionsSpec extends BaseSpec {
         then:
         partial.columnCount() == initColSize - 1
     }
+
+    void 'table rows filtered by selection table = table[Selection]'() {
+        when:
+        Table partial = table[table['SUGAR'].d.isCloseTo(3.5, 0.05)]
+
+        then:
+        partial.size() == 56
+    }
+
+    void 'table rows filtered by selection and columns table = table[Selection, [colName1, colNameN]'() {
+        when:
+        Table partial = table[table['SUGAR'].d.isCloseTo(3.5, 0.05), ["ID", "NAME"]]
+
+        then:
+        partial.size() == 56
+        partial.columnCount() == 2
+    }
+
+    void 'column rows filtered by selection and columns col = table[Selection, colName]'() {
+        when:
+        Column ids = table[table['SUGAR'].d.isCloseTo(3.5, 0.05), "ID"]
+
+        then:
+        ids.size() == 56
+    }
 }
