@@ -58,6 +58,10 @@ class TableExtensions {
         return source.where(filter).retainColumns(cols as String[])
     }
 
+    static <T extends Column> T getAt(Table source, String column, Class<T> clazz){
+        return source.column(column).asType(clazz)
+    }
+
     static <U> Column <U> getAt(Table source, Selection filter, String col) {
         return source.where(filter).column(col) as Column<U>
     }

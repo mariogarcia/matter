@@ -1,7 +1,9 @@
 package com.github.grooviter.matter.tablesaw
 
+import tech.tablesaw.api.DoubleColumn
 import tech.tablesaw.api.Table
 import tech.tablesaw.columns.Column
+import tech.tablesaw.selection.Selection
 
 class TableExtensionsSpec extends BaseSpec {
     void 'column rows by iloc(row0...rowN, colName)'() {
@@ -143,7 +145,7 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'table rows filtered by selection table = table[Selection]'() {
         when:
-        Table partial = table[table['SUGAR'].d.isCloseTo(3.5, 0.05)]
+        Table partial = table[table['SUGAR', DoubleColumn].isCloseTo(3.5, 0.05)]
 
         then:
         partial.size() == 56
@@ -151,7 +153,7 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'table rows filtered by selection and columns table = table[Selection, [colName1, colNameN]'() {
         when:
-        Table partial = table[table['SUGAR'].d.isCloseTo(3.5, 0.05), ["ID", "NAME"]]
+        Table partial = table[table['SUGAR', DoubleColumn].isCloseTo(3.5, 0.05), ["ID", "NAME"]]
 
         then:
         partial.size() == 56
@@ -160,7 +162,17 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'column rows filtered by selection and columns col = table[Selection, colName]'() {
         when:
-        Column ids = table[table['SUGAR'].d.isCloseTo(3.5, 0.05), "ID"]
+        Column ids = table[table['SUGAR', DoubleColumn].isCloseTo(3.5, 0.05), "ID"]
+
+        then:
+        ids.size() == 56
+    }
+
+    void 'get typed column from table col = table[colName, colTypeClass]'() {
+        when:
+        DoubleColumn typedColumn = table['SUGAR', DoubleColumn]
+        Selection closeTo3andHalf = typedColumn.isCloseTo(3.5, 0.05)
+        Column ids = table[closeTo3andHalf, "ID"]
 
         then:
         ids.size() == 56
