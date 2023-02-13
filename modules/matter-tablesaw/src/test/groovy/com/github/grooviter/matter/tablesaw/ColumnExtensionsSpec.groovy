@@ -7,7 +7,7 @@ class ColumnExtensionsSpec extends BaseSpec {
     @Unroll
     def 'apply arithmetic ops (#id)'(Closure<Column> operation, BigDecimal expectedResult) {
         when:
-        def transformedCol = operation(table[0..10, 'SUGAR'])
+        def transformedCol = operation(foodTable[0..10, 'SUGAR'])
 
         then:
         transformedCol[5] == expectedResult

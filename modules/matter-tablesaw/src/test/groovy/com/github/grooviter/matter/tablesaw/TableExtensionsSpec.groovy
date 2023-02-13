@@ -8,7 +8,7 @@ import tech.tablesaw.selection.Selection
 class TableExtensionsSpec extends BaseSpec {
     void 'column rows by iloc(row0...rowN, colName)'() {
         when:
-        Column idColumn = table.iloc(0..2, "ID")
+        Column idColumn = foodTable.iloc(0..2, "ID")
 
         then:
         idColumn.name() == 'ID'
@@ -19,7 +19,7 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'column rows by iloc(row0...rowN, colIndex)'() {
         when:
-        Column nameColumn = table.iloc(0..2, 1)
+        Column nameColumn = foodTable.iloc(0..2, 1)
 
         then:
         nameColumn.name() == 'NAME'
@@ -30,7 +30,7 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'table rows by iloc(row0...rowN, [colName0, colName1, colNameN])'() {
         when:
-        Table partial = table.iloc(0..2, ["ID", "NAME"])
+        Table partial = foodTable.iloc(0..2, ["ID", "NAME"])
 
         then:
         partial.columnNames() == ['ID', 'NAME']
@@ -41,7 +41,7 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'table rows by iloc(row0...rowN, [colIndex0, colIndex1, colIndexN])'() {
         when:
-        Table partial = table.iloc(0..2, [0, 2])
+        Table partial = foodTable.iloc(0..2, [0, 2])
 
         then:
         partial.columnNames() == ['ID', 'BRAND ID']
@@ -52,7 +52,7 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'table rows by [row0...rowN] operator'() {
         when:
-        Table partial = table[0..2]
+        Table partial = foodTable[0..2]
 
         then:
         partial.columnNames().size() == 20
@@ -63,7 +63,7 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'table rows by [row0...rowN, [colName0, colName1, colName2] operator'() {
         when:
-        Table partial = table[0..2, ["ID", "NAME"]]
+        Table partial = foodTable[0..2, ["ID", "NAME"]]
 
         then:
         partial.columnNames() == ['ID', 'NAME']
@@ -74,7 +74,7 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'table rows by [row0..rowN, [colIndex0, colIndex1, colIndexN]] operator'() {
         when:
-        Table partial = table[0..2, [1]]
+        Table partial = foodTable[0..2, [1]]
 
         then:
         partial.columnNames() == ['NAME']
@@ -85,7 +85,7 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'column rows by [row0...rowN, colName] operator'() {
         when:
-        Column idColumn = table[0..2, "ID"]
+        Column idColumn = foodTable[0..2, "ID"]
 
         then:
         idColumn.name() == 'ID'
@@ -96,7 +96,7 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'table rows by [row0..rowN, col...col] operator'() {
         when:
-        Table partial = table[0..2, 0..1]
+        Table partial = foodTable[0..2, 0..1]
 
         then:
         partial.columnNames() == ['ID', 'NAME']
@@ -107,7 +107,7 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'column rows by [row0...rowN, colIndex] operator'() {
         when:
-        Column partial = table[0..2, 1]
+        Column partial = foodTable[0..2, 1]
 
         then:
         partial.name() == 'NAME'
@@ -118,7 +118,7 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'add column by table[colName] = column operator'() {
         given:
-        Table partial = table.iloc(0..3, ["NAME"])
+        Table partial = foodTable.iloc(0..3, ["NAME"])
         Integer initColSize = partial.columnCount()
 
         when:
@@ -133,7 +133,7 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'remove column by table[colName] - column operator'() {
         given:
-        Table partial = table.iloc(0..3, ["ID", "NAME"])
+        Table partial = foodTable.iloc(0..3, ["ID", "NAME"])
         Integer initColSize = partial.columnCount()
 
         when:
@@ -145,7 +145,7 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'table rows filtered by selection table = table[Selection]'() {
         when:
-        Table partial = table[table['SUGAR', DoubleColumn].isCloseTo(3.5, 0.05)]
+        Table partial = foodTable[foodTable['SUGAR', DoubleColumn].isCloseTo(3.5, 0.05)]
 
         then:
         partial.size() == 56
@@ -153,7 +153,7 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'table rows filtered by selection and columns table = table[Selection, [colName1, colNameN]'() {
         when:
-        Table partial = table[table['SUGAR', DoubleColumn].isCloseTo(3.5, 0.05), ["ID", "NAME"]]
+        Table partial = foodTable[foodTable['SUGAR', DoubleColumn].isCloseTo(3.5, 0.05), ["ID", "NAME"]]
 
         then:
         partial.size() == 56
@@ -162,7 +162,7 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'column rows filtered by selection and columns col = table[Selection, colName]'() {
         when:
-        Column ids = table[table['SUGAR', DoubleColumn].isCloseTo(3.5, 0.05), "ID"]
+        Column ids = foodTable[foodTable['SUGAR', DoubleColumn].isCloseTo(3.5, 0.05), "ID"]
 
         then:
         ids.size() == 56
@@ -170,9 +170,9 @@ class TableExtensionsSpec extends BaseSpec {
 
     void 'get typed column from table col = table[colName, colTypeClass]'() {
         when:
-        DoubleColumn typedColumn = table['SUGAR', DoubleColumn]
+        DoubleColumn typedColumn = foodTable['SUGAR', DoubleColumn]
         Selection closeTo3andHalf = typedColumn.isCloseTo(3.5, 0.05)
-        Column ids = table[closeTo3andHalf, "ID"]
+        Column ids = foodTable[closeTo3andHalf, "ID"]
 
         then:
         ids.size() == 56

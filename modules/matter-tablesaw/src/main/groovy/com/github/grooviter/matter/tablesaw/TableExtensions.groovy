@@ -1,5 +1,6 @@
 package com.github.grooviter.matter.tablesaw
 
+import com.github.grooviter.matter.tablesaw.ast.ASTOverridden
 import groovy.transform.CompileStatic
 import tech.tablesaw.api.BooleanColumn
 import tech.tablesaw.api.ColumnType
@@ -77,6 +78,11 @@ class TableExtensions {
 
     static <U> Column<U> getAt(Table source, IntRange indexRange, Integer column) {
         return byIndexRangeAndIntegerColumn(source, indexRange, column)
+    }
+
+    @ASTOverridden
+    static <U> Column<U> getAt(Table source, Boolean predicate, String column) {
+        throw new RuntimeException("this method should be captured by AST transform")
     }
 
     static <U> Table putAt(Table source, String key, Column<U> replaceBy) {

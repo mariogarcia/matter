@@ -1,0 +1,63 @@
+package com.github.grooviter.matter.tablesaw.ast
+
+import com.github.grooviter.matter.tablesaw.BaseSpec
+import tech.tablesaw.api.DoubleColumn
+import tech.tablesaw.columns.Column
+import tech.tablesaw.selection.Selection
+
+import java.time.LocalDateTime
+
+class IndexBasedQueriesSpec extends BaseSpec {
+
+    void 'query column chaining method calls vs index based calls'() {
+        given: "a verbose form of using selection"
+        Column sugarCol = foodTable['SUGAR', DoubleColumn]
+        Selection query = sugarCol.isGreaterThan(3.5) & sugarCol.isLessThanOrEqualTo(3.55)
+        Column idsVerbose = foodTable.where(query).column("ID")
+
+        when: "using index based syntax"
+        Column idsIndexBased = foodTable[foodTable['SUGAR'] > 3.5 & foodTable["SUGAR"] <= 3.55, "ID"]
+
+        then: "both queries should have the same result"
+        idsIndexBased.size() == idsVerbose.size()
+    }
+
+    void 'query column combining equals with lessThanOrEqualTo'() {
+        when:
+        Column ids = foodTable[foodTable['BRAND ID'] == 214 & foodTable['SUGAR'] <= 1, "ID"]
+
+        then:
+        ids.size() == 8
+    }
+
+    void 'query column using equals'() {
+        when:
+        Column ids = foodTable[foodTable['BRAND ID'] == 214, "ID"]
+
+        then:
+        ids.size() == 37
+
+        when:
+        ids = foodTable[foodTable['SUBGROUP NAME'] == "Salsas", "ID"]
+
+        then:
+        ids.size() == 84
+    }
+
+    void 'query column using greater and less than with dates'() {
+        given:
+        LocalDateTime from = LocalDateTime.of(2016, 01, 01, 00, 00)
+
+        when: "using a reference"
+        Column ids = ratesTable[ratesTable["time"] > from, "m3"]
+
+        then: "it should work and compare with the proper type"
+        ids[0] == 0.22
+
+        when: "using the full method call expression"
+        ids = ratesTable[ratesTable["time"] > LocalDateTime.of(2016, 01, 01, 00, 00), "m3"]
+
+        then: "it should resolve the proper column type too"
+        ids[0] == 0.22
+    }
+}
