@@ -85,6 +85,11 @@ class TableExtensions {
         throw new RuntimeException("this method should be captured by AST transform")
     }
 
+    @ASTOverridden
+    static Table getAt(Table source, Boolean predicate, List cols) {
+        throw new RuntimeException("this method should be captured by AST transform")
+    }
+
     static <U> Table putAt(Table source, String key, Column<U> replaceBy) {
         return source.addColumns(resolveColumn(key, replaceBy).append(replaceBy) as Column<?>[])
     }

@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     api "org.codehaus.groovy:groovy:$groovy"
+    api "org.codehaus.groovy:groovy-datetime:$groovy"
     api "org.codehaus.groovy:groovy-json:$groovy"
     api "org.codehaus.groovy:groovy-dateutil:$groovy"
     api "tech.tablesaw:tablesaw-core:0.37.1"

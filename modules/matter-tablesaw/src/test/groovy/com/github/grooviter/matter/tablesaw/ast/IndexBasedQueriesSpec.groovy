@@ -2,10 +2,13 @@ package com.github.grooviter.matter.tablesaw.ast
 
 import com.github.grooviter.matter.tablesaw.BaseSpec
 import tech.tablesaw.api.DoubleColumn
+import tech.tablesaw.api.Table
 import tech.tablesaw.columns.Column
 import tech.tablesaw.selection.Selection
 
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.Month
 
 class IndexBasedQueriesSpec extends BaseSpec {
 
@@ -59,5 +62,17 @@ class IndexBasedQueriesSpec extends BaseSpec {
 
         then: "it should resolve the proper column type too"
         ids[0] == 0.22
+    }
+
+    void 'query table'() {
+        given:
+        LocalDate from = LocalDate.of(2016, Month.JANUARY, 1)
+
+        when:
+        Table table = ratesTable[ratesTable['time'] > from, ['y1', 'y10']]
+
+        then:
+        table.size() == 1
+        table.columnCount() == 2
     }
 }

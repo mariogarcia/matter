@@ -46,8 +46,7 @@ class SelectionTransformer extends ClassCodeExpressionTransformer {
             //return callX(column, resolveTokenMethod(binaryExpression.operation.type), args(valueX))
             println "===========================>${binaryExpression.rightExpression}"
             ClassNode rightExpressionType = resolveArgumentToCompareToClassNode(binaryExpression.rightExpression)
-            String method = resolveTokenMethod(binaryExpression.operation.type, rightExpressionType)
-            return callX(column, method, args(binaryExpression.rightExpression))
+            return callX(column, resolveToken(binaryExpression.operation.type), args(binaryExpression.rightExpression))
         }
 
         return expr.transformExpression(this)
@@ -60,25 +59,7 @@ class SelectionTransformer extends ClassCodeExpressionTransformer {
         return expression.type
     }
 
-    private static String resolveTokenMethod(int token, ClassNode toCompareToClass) {
-        switch(toCompareToClass.typeClass) {
-            case LocalDateTime: return resolveTokenMethodForDates(token)
-            case Number: return resolveTokenMethodForNumbers(token)
-        }
-    }
-
-    private static String resolveTokenMethodForDates(int token) {
-        switch(token) {
-            case Types.COMPARE_LESS_THAN_EQUAL: return "isBefore"
-            case Types.COMPARE_LESS_THAN: return "isOnOrBefore"
-            case Types.COMPARE_GREATER_THAN: return "isAfter"
-            case Types.COMPARE_GREATER_THAN_EQUAL: return "isOnOrAfter"
-            case Types.COMPARE_EQUAL: return "isEqualTo"
-            case Types.COMPARE_NOT_EQUAL: return "isNotEqualTo"
-        }
-    }
-
-    private static String resolveTokenMethodForNumbers(int token){
+    private static String resolveToken(int token){
         switch(token) {
             case Types.COMPARE_LESS_THAN_EQUAL: return "isLessThanOrEqualTo"
             case Types.COMPARE_LESS_THAN: return "isLessThan"
