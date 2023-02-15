@@ -27,7 +27,8 @@ cd ../tabledisplay && \
   pip install -r requirements.txt --verbose && \
   beakerx_tabledisplay install && \
   cd js && \
-  jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build && \
+  jupyter labextension install @jupyter-widgets/jupyterlab-manager@3.0.1 --no-build && \
+  jupyter labextension enable @jupyter-widgets/jupyterlab-manager && \
   jupyter labextension install . --no-build && \
   conda deactivate
 
@@ -41,6 +42,10 @@ cd ../../../widgets && \
   jupyter labextension install . --no-build && \
   conda deactivate
 
-#jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build
-#jupyter labextension install /opt/conda/envs/beakerx_tabledisplay --no-build
 jupyter lab build
+
+# TODO: fixing tabledisplay is not compatible with jupyterlab-manager@5.0.3
+jupyter labextension disable @jupyter-widgets/jupyterlab-manager
+pip uninstall -y jupyterlab_widgets
+jupyter labextension install @jupyter-widgets/jupyterlab-manager@3.0.1
+jupyter labextension enable @jupyter-widgets/jupyterlab-manager

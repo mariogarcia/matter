@@ -129,7 +129,7 @@ def install(args):
     subprocess.check_call(["jupyter", "nbextension", "enable", "beakerx", "--py", "--sys-prefix"])
     subprocess.check_call(["jupyter", "serverextension", "enable", "beakerx", "--py", "--sys-prefix"])
     if LAB_VERSION is not None and LAB_VERSION != 3:
-        subprocess.call(["jupyter", "labextension", "install", "@jupyter-widgets/jupyterlab-manager", "--no-build"],
+        subprocess.call(["jupyter", "labextension", "install", "@jupyter-widgets/jupyterlab-manager@3.0.1", "--no-build"],
                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         if LAB_VERSION == 1:
             subprocess.check_call(["jupyter", "labextension", "install", "@beakerx/beakerx-widgets@2.0"])
