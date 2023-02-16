@@ -91,11 +91,19 @@ class TableExtensions {
     }
 
     static <U> Table putAt(Table source, String key, Column<U> replaceBy) {
+        if (source.columnNames().contains(key)) {
+            source.removeColumns(key)
+        }
         return source.addColumns(resolveColumn(key, replaceBy).append(replaceBy) as Column<?>[])
     }
 
     static Table minus(Table source, Column<?> columnToDelete) {
-        return source.removeColumns(columnToDelete)
+        Table destination = source.copy()
+        return destination.removeColumns(destination.column(columnToDelete.name()))
+    }
+
+    static Table dropna(Table source) {
+        return source.dropRowsWithMissingValues()
     }
 
     private static <U> Column<U> byIndexRangeAndStringColumn(Table source, IntRange indexRange, String column) {

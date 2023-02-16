@@ -131,16 +131,38 @@ class TableExtensionsSpec extends BaseSpec {
         partial.columnCount() == initColSize + 1
     }
 
+    void 'add same column twice'() {
+        given:
+        Table partial = foodTable.iloc(0..3, ["NAME"])
+        Integer initColSize = partial.columnCount()
+
+        when:
+        partial['NAME_AGAIN'] = partial["NAME"]
+        partial['NAME_AGAIN'] = partial["NAME"]
+
+        then:
+        partial['NAME_AGAIN'].size() == partial['NAME'].size()
+
+        and:
+        partial.columnCount() == initColSize + 1
+    }
+
     void 'remove column by table[colName] - column operator'() {
         given:
         Table partial = foodTable.iloc(0..3, ["ID", "NAME"])
         Integer initColSize = partial.columnCount()
 
-        when:
-        partial = partial - partial["NAME"]
+        when: "removing a column from a table"
+        Table result = partial - partial["NAME"]
 
-        then:
-        partial.columnCount() == initColSize - 1
+        then: "it produces the expected result"
+        result.columnCount() == initColSize - 1
+
+        when: "doing it again"
+        result = partial - partial["NAME"]
+
+        then: "it produces always the same result"
+        result.columnCount() == initColSize - 1
     }
 
     void 'table rows filtered by selection table = table[Selection]'() {
@@ -176,5 +198,16 @@ class TableExtensionsSpec extends BaseSpec {
 
         then:
         ids.size() == 56
+    }
+
+    void 'drop NaN from all rows'() {
+        when:
+        Table withoutNaN = foodTable.dropna()
+
+        then:
+        foodTable.size() > withoutNaN.size()
+
+        and:
+        withoutNaN != foodTable
     }
 }
