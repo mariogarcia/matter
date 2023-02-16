@@ -3,7 +3,6 @@ package com.github.grooviter.matter.tablesaw.ast
 import groovy.transform.TupleConstructor
 import org.codehaus.groovy.ast.ASTNode
 import org.codehaus.groovy.ast.ClassCodeExpressionTransformer
-import org.codehaus.groovy.ast.ClassNode
 import org.codehaus.groovy.ast.expr.BinaryExpression
 import org.codehaus.groovy.ast.expr.ConstantExpression
 import org.codehaus.groovy.ast.expr.Expression
@@ -12,9 +11,6 @@ import org.codehaus.groovy.ast.expr.VariableExpression
 import org.codehaus.groovy.control.SourceUnit
 import org.codehaus.groovy.macro.matcher.ASTMatcher
 import org.codehaus.groovy.syntax.Types
-import tech.tablesaw.api.NumberColumn
-
-import java.time.LocalDateTime
 
 import static org.codehaus.groovy.ast.tools.GeneralUtils.args
 import static org.codehaus.groovy.ast.tools.GeneralUtils.callX
@@ -36,27 +32,12 @@ class SelectionTransformer extends ClassCodeExpressionTransformer {
             BinaryExpression getAtX = binaryExpression.leftExpression as BinaryExpression
             VariableExpression varX = getAtX.leftExpression as VariableExpression
             ConstantExpression colX = getAtX.rightExpression as ConstantExpression
+            MethodCallExpression columnX = callX(varX, "column", args(colX))
 
-            def column = callX(varX, "column", args(colX))
-
-            // rightExpression => value
-            //ConstantExpression valueX = binaryExpression.rightExpression as ConstantExpression
-
-
-            //return callX(column, resolveTokenMethod(binaryExpression.operation.type), args(valueX))
-            println "===========================>${binaryExpression.rightExpression}"
-            ClassNode rightExpressionType = resolveArgumentToCompareToClassNode(binaryExpression.rightExpression)
-            return callX(column, resolveToken(binaryExpression.operation.type), args(binaryExpression.rightExpression))
+            return callX(columnX, resolveToken(binaryExpression.operation.type), args(binaryExpression.rightExpression))
         }
 
         return expr.transformExpression(this)
-    }
-
-    private static ClassNode resolveArgumentToCompareToClassNode(Expression expression) {
-        if (expression instanceof MethodCallExpression) {
-            return expression.objectExpression.type
-        }
-        return expression.type
     }
 
     private static String resolveToken(int token){
