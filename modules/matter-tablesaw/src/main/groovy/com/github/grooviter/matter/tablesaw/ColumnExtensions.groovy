@@ -1,5 +1,6 @@
 package com.github.grooviter.matter.tablesaw
 
+import tech.tablesaw.api.NumberColumn
 import tech.tablesaw.columns.Column
 import tech.tablesaw.selection.Selection
 
@@ -24,5 +25,12 @@ class ColumnExtensions {
 
     static <T> Column<T> where(Column<T> source, Closure<Selection> fn) {
         return source.where(fn(source) as Selection)
+    }
+
+    static Column minus(Column source, Column other) {
+        if (source instanceof NumberColumn && other instanceof NumberColumn){
+            return source.subtract(other)
+        }
+        throw new RuntimeException("can't subtract NON number columns")
     }
 }

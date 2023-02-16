@@ -21,4 +21,30 @@ class ColumnExtensionsSpec extends BaseSpec {
         'reminder' | { col -> col % 2 }   | 0.5
         'power'    | { col -> col ** 2 }  | 0.25
     }
+
+    def 'apply number column subtraction table[col1] - table[col2]'() {
+        given:
+        foodTable = foodTable.dropRowsWithMissingValues()
+
+        when:
+        foodTable["CS_DIFF"] = foodTable["CARBS"] - foodTable["SUGAR"]
+
+        then:
+        foodTable["CS_DIFF"].size() == foodTable.size()
+
+        and:
+        foodTable[0..0, "CS_DIFF"][0] == foodTable[0..0, "CARBS"][0] - foodTable[0..0, "SUGAR"][0]
+    }
+
+    def 'throwing exception when apply not number column subtraction table[col1] - table[col2]'() {
+        given:
+        foodTable = foodTable.dropRowsWithMissingValues()
+
+        when:
+        foodTable["CS_DIFF"] = foodTable["CARBS"] - foodTable["BRAND"]
+
+        then:
+        def e = thrown(RuntimeException)
+        e.message.contains("NON")
+    }
 }
