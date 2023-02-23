@@ -1,3 +1,0 @@
-== Intro
-
-Matter is a Jupyter Kernel capable of running Groovy code. It's built on top of the BeakerX project. Matter is licensed under Apache 2.0.

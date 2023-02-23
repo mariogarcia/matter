@@ -1,0 +1,9 @@
+= Blogs
+Mario Garcia
+2023-02-18
+:jbake-type: blogindex
+:jbake-status: published
+:jbake-tags: blog,asciidoc
+:idprefix:
+
+aqui

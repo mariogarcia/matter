@@ -1,15 +1,6 @@
 plugins {
-    id 'groovy'
-    id "com.bertramlabs.asset-pipeline" version "3.4.4"
     id 'org.ajoberstar.git-publish'
-}
-
-dependencies {
-    assets('com.github.grooviter:groocss:1.0.0-SNAPSHOT')
-    assets "com.bertramlabs.plugins:asset-pipeline-core:$assets_pipeline"
-    assets("com.bertramlabs.plugins:groocss-asset-pipeline:$assets_pipeline") {
-        exclude module: 'groocss'
-    }
+    id 'org.jbake.site' version '5.5.0'
 }
 
 java {
@@ -17,19 +8,11 @@ java {
     targetCompatibility = '11'
 }
 
-assets {
-    minifyJs         = true
-    minifyCss        = false
-    enableSourceMaps = false
-    maxThreads       = Runtime.runtime.availableProcessors() - 1
-
-    configOptions = [
-        commonJs: true,
-        enableES6: false,
-        groocss: [prettyPrint: true, compress: false, noExts: false, convertUnderline: false]
-    ]
-
-    excludes = ['origins/*', '**/jquery/**']
+jbake {
+    srcDirName = 'src/jbake'
+    destDirName = 'jbake'
+    clearCache = true
+    configuration['matter_version'] = project.rootProject.version
 }
 
 gitPublish {
@@ -44,23 +27,7 @@ gitPublish {
 }
 
 gitPublishPush {
-    dependsOn('setAuthentication','generateSite')
-}
-
-task generateSite {
-    dependsOn(
-        "clean",
-        ":guide:asciidoctor",
-        ":website:assetClean",
-        ":website:assetCompile"
-    )
-
-    doLast {
-        copy {
-            from "$rootDir/docs/guide/build/docs/asciidoc"
-            into "$rootDir/docs/website/build/assets/guide"
-        }
-    }
+    dependsOn('setAuthentication','bake')
 }
 
 task setAuthentication {

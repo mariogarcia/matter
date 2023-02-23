@@ -1,0 +1,88 @@
+= Intro
+:jbake-type: guide
+:jbake-status: published
+:jbake-tags: blog,asciidoc
+:idprefix:
+:parent:
+:order: 1
+:ordersub: 0
+
+== Intro
+
+**Matter** is a https://docs.jupyter.org/en/latest/projects/kernels.html[Jupyter Kernel] 
+for the https://groovy-lang.org/[Groovy language]. 
+
+**Matter** was born as a fork of the http://beakerx.com/[Beakerx] project. Although the 
+BeakerX project is a great project, Matter wants to focus on the Groovy language. 
+It tries to integrate several analytic and machine learning JVM libraries together to 
+create a common developer experience using the Groovy language syntax as entry point.
+
+WARNING: You have to be careful when doing this type of things it you'd like to survive
+
+To give you a hint about how is to develop with Matter lets take Tablesaw as an
+example. Tablesaw is one of the libraries integrated with Matter. The following
+snippet is taken from the Tablesaw page. It shows how to filter a series of 
+tornadoes chaining specific criterias:
+
+NOTE: This is just a note to keep in mind
+
+[source, java]
+----
+import com.github.tablesaw.api.Table
+
+Table tornadoes = Table.read().csv('tornadoes.csv')
+Table result = tornadoes.where(tornadoes.intColumn("Fatalities").isGreaterThan(0));
+result = tornadoes.where(result.dateColumn("Date").isInApril());
+
+result = tornadoes.where(
+    result
+        .intColumn("Width")
+        .isGreaterThan(300) // 300 yards
+        .or(result.doubleColumn("Length").isGreaterThan(10))); 
+----
+
+And then you can find the same code using Groovy list syntax. Underneath Matter is using
+the same API but with a shorter concise way.
+
+[source, groovy]
+.Groovy code
+----
+import com.github.grooviter.matter.Matter as mt
+
+tornadoes = mt.read.csv('tornadoes.csv', sep=';')
+criterias = tornadoes['Fatalities'] > 0 & tornadoes['Date'] in [Month.APRIL] & tornadoes['Width'] > 300
+tornadoes = tornadoes[criterias | tornadoes['Length'] > 10]
+----
+
+The same way Matter tries to cover the following topics:
+
+IMPORTANT: This is a very important part you have to take care
+
+[cols="1,1"]
+|===
+|Area | Libraries
+
+|Tables, Dataframes
+|https://jtablesaw.github.io/tablesaw/[Tablesaw]
+
+|ML
+|https://haifengl.github.io/index.html[Smile], https://tribuo.org/[Tribuo], https://docs.djl.ai/[DJL], https://github.com/deeplearning4j/deeplearning4j[DeepLearning4j]
+
+|===
+
+=== References
+
+These are more reference to look at:
+
+- https://blogs.oracle.com/javamagazine/post/java-machine-learning-tribuo-python-scikit-learn
+- https://github.com/MKhalusova/ML-JVM
+- https://opennlp.apache.org/
+
+== Phylosophy
+
+Before settling for Material for MkDocs, it's a good idea to understand the philosophy behind the project, in order to make sure it aligns with your goals. This page explains the design principles anchored in Material for MkDocs, and discusses the conventions used in this documentation.
+
+== Design principles
+
+It's just Markdown: Focus on the content of your documentation and create a professional static site in minutes. No need to know HTML,CSS or JavaScript – let Material for MkDocs do the heavy lifting for you.
+

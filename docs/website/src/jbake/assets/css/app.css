@@ -1,0 +1,454 @@
+@font-face {
+    font-family: 'Roboto';
+    font-style: bold;
+    font-weight: 800;
+    src: url('/fonts/Roboto-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: italic;
+    font-weight: 400;
+    src: url('/fonts/Roboto-Thin.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/fonts/Roboto-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/fonts/material-icons.woff2') format('woff2');
+}
+
+* {
+    font-family: 'Roboto', 'Roboto Mono', Helvetica,Arial,sans-serif;
+}
+
+.bg-network {
+    background: url('/img/background.jpg');
+    background-size: cover;
+    border-bottom: 1px solid #ccc;
+}
+
+a.feature-link {
+    color: #1a237e;
+    font-weight: 800;
+    margin: 0em .2em;
+}
+
+div.project-links > .col > ul {
+    list-style: none;
+    list-style-type: none;
+    margin: 0;
+}
+
+div.project-links > .col > ul > li > a:hover {
+    text-decoration: underline;
+}
+
+.brand-logo > img {
+    width: 24px;
+    height: 24px;
+    margin-right: .2em;
+}
+
+.brand-logo > span {
+    font-size: .9em;
+    text-transform: lowercase;
+}
+
+h1.header.title {
+    margin-top: .4em;
+    margin-bottom: 0;
+    text-transform: lowercase;
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -moz-font-feature-settings: 'liga';
+    -moz-osx-font-smoothing: grayscale;
+}
+
+nav a {
+    line-height: 64px !important;
+}
+
+.jumbo {
+    align-items: center;    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 45vh;
+}
+
+.github {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+}
+
+div.version {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: .5em;
+}
+div.version > span {
+    font-size: .8em;
+}
+
+a.ghrepo {
+    line-height: 1em !important;
+    padding: 0;
+}
+
+.github-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
+    margin-left: 1em;
+}
+
+.github > img {
+    width: 28px;
+    height: 28px;
+    filter: invert(1)
+}
+
+/* GUIDE */
+
+.page-tools > .sect1 > h2 {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.page-source-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    position: absolute;
+    justify-items: end;
+    top: 6.5em;
+    width: 50%;
+    padding-left: 0;
+    margin-left: 0;
+    right: 33em;
+}
+
+.page-source-links > li > a {
+    color: #0d47a1;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    margin-left: 1em;
+}
+
+.page-source-links > li > a > span { 
+    margin-left: .2em;
+}
+
+.page-source-links > li > a > i {
+    border: 1px solid;
+    border-radius: 1em;
+    padding: .2em;
+}
+
+div.docs {
+    margin-bottom: 0px;
+}
+
+div.docs > div.col {
+    min-height: 75vh !important;
+}
+
+div.docs > div.col.index {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: end;
+    padding-top: 3em;
+    padding-right: 3em;
+    position: sticky;
+    top: 3em;
+}
+
+div.docs > div.col.subindex {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    padding-top: 3em;
+    position: sticky;
+    top: 3em;
+}
+
+div.docs > div.col.index > ul > li > a {
+    color: #666;
+    font-size: 1.1em;
+}
+
+div.docs > div.col.subindex > ul > li > a {
+    color: #666;
+    font-size: 1.1em;
+}
+
+div.sidebarblock > div.content > div.title {
+    color: #3f51b5;
+    font-family: 'Roboto';
+    font-style: italic;
+}
+
+div.listingblock > div.title {
+    color: #1a237e ;
+    font-family: 'Roboto';
+    font-style: normal;
+}
+
+.quoteblock blockquote {
+    color: #1a237e  ;
+    font-family: 'Roboto';
+    font-size: 1.3em;
+    font-style: italic;
+    margin-top: 1em;
+}
+
+div.paragraph > p > a {
+    color: #3f51b5;
+}
+
+a.bare {
+    color: #3f51b5;
+    font-size: 1.1em;
+}
+
+div.docs > div.col > ul > li > a.selected {    
+    font-weight: 800;
+}
+
+div.paragraph > p {
+    font-size: 1.2em;
+}
+
+div.paragraph > p > strong {
+    font-weight: 800;
+}
+
+div.ulist > ul > li {
+    list-style-type: disc;
+}
+
+h2 {
+    font-size: 2em;
+}
+
+h3 {
+    font-size: 1.5em;
+}
+
+.listingblock pre.prettyprint {
+    padding: 0;
+}
+
+div.docs > .col > div > h2 {
+    font-size: 2em;
+    font-style: italic;
+    font-weight: 800;
+    color: #5c6bc0;
+    margin-bottom: 1.5em;
+}
+
+div.docs > .col > div > h1,h3,h4 {
+    font-style: italic;
+    font-weight: 800;
+    color: #5c6bc0;
+}
+
+pre, pre > code {
+    font-family: 'Roboto', 'Roboto Mono', Helvetica,Arial,sans-serif;
+    font-size: 1.2em;
+}
+
+strong {
+    font-style: bold;
+}
+
+div.admonitionblock > table > tbody > tr > td.icon {
+    min-width: 100px;    
+}
+
+div.admonitionblock.warning > table > tbody > tr > td.icon {
+    color: #e65100;
+}
+
+div.admonitionblock.warning > table > tbody > tr > td.content {
+    background-color: #ffe0b2;
+    border-color: #333;
+}
+
+div.admonitionblock.note > table > tbody > tr > td.icon {
+    color: #0d47a1;
+}
+
+div.admonitionblock.note > table > tbody > tr > td.content {
+    background-color: #e3f2fd;
+    border-color: #333;
+}
+
+div.admonitionblock.important > table > tbody > tr > td.icon {
+    color: #b71c1c;
+}
+
+div.admonitionblock.important > table > tbody > tr > td.content {
+    background-color: #ffebee;
+    border-color: #333;
+}
+
+p.tableblock {
+    font-size: 1.2em;
+}
+
+p.tableblock > a {
+    color: #3f51b5;
+}
+
+.level-3 {
+    margin-left: 1em;
+}
+
+/* blog */
+
+div.back-index {
+    margin-top: 0;
+    padding-top: 0;
+    margin-bottom: 2em;
+}
+
+div.back-index a {
+    color: #333;
+    display: flex;
+    flex-direction: row;
+    font-weight: 800;
+    justify-content: start;
+    align-items: center;
+}
+
+div.back-index a:hover {
+    color: #0d47a1;
+}
+
+div.author-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: start;
+    margin-top: 1em;    
+}
+
+div.author-block > img {
+    width: 42px;
+    height: 42px;
+    margin-right: .2em;
+}
+
+div.author-block > div.author-info {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-left: 1em;
+}
+
+div.author-block > div.author-info > h6 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 800;
+    font-style: bold;
+}
+
+ul.metadata-block-horizontal {
+    color: #999;
+    display: flex;
+    flex-direction: "row";
+    align-items: center;
+    justify-items: center;
+    justify-content: start;
+    margin-bottom: .5em;
+    margin-left: 0;
+}
+
+ul.metadata-block-horizontal > li {
+    margin-right: .8em;
+    display: flex;
+    flex-direction: "row";
+    align-items: center;
+    justify-items: center;
+    justify-content: start;
+}
+
+ul.metadata-block-horizontal > li > i {
+    margin-right: .2em;
+}
+
+ul.metadata-block-horizontal > li.metadata > img {
+    width: 36px;
+}
+
+div.blog > div.col.content {
+    margin-bottom: 6em;
+}
+
+div.docs > .col > div.blog-entry {
+    margin-top: 3.5em;
+}
+
+div.docs > .col > div.blog-entry > h2 {
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
+
+div.docs > .col > div.blog-entry > h6 {
+    color: #666;
+    font-weight: 800;
+    line-height: 1.5em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+ul.metadata-block > li{
+    display: flex;
+    flex-direction: "row";
+    align-items: start;
+    justify-content: space-between;
+    margin-bottom: .5em;
+}
+
+ul.metadata-block > li > h6 {
+    color: #666;
+    font-size: 1.1em;
+    font-weight: 800;
+    margin-bottom: .2em;
+}
+
+ul.metadata-block > li.metadata > span {
+    margin-left: 1em;
+    text-align: left;
+    width: 100%;
+}
