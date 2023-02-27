@@ -210,4 +210,22 @@ class TableExtensionsSpec extends BaseSpec {
         and:
         withoutNaN != foodTable
     }
+
+    void 'renaming columns'() {
+        given:
+        Map<String,String> MAPPINGS = [
+            'TRAFFICLIGHT VALUE': 'traffic_light',
+            'PYRAMID VAL': 'pyramid_val'
+        ]
+
+        and:
+        Table renamedCols = foodTable.renameColumns(MAPPINGS)
+
+        when:
+        Table result = renamedCols[0..10, ['traffic_light', 'pyramid_val']].copy()
+
+        then:
+        result.rowCount()    == 10
+        result.columnCount() == 2
+    }
 }

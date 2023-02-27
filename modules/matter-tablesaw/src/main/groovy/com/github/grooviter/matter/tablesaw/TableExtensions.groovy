@@ -106,6 +106,11 @@ class TableExtensions {
         return source.dropRowsWithMissingValues()
     }
 
+    static Table renameColumns(Table table, Map<String, String> columnNameMappings) {
+        columnNameMappings.collect { table.column(it.key).setName(it.value) }
+        return table
+    }
+
     private static <U> Column<U> byIndexRangeAndStringColumn(Table source, IntRange indexRange, String column) {
         return source.column(column).subset(indexRange as int[]) as Column<U>
     }
