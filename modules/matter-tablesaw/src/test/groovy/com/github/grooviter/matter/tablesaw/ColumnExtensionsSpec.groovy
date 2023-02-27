@@ -1,7 +1,14 @@
 package com.github.grooviter.matter.tablesaw
 
 import spock.lang.Unroll
+import tech.tablesaw.api.DateColumn
+import tech.tablesaw.api.DoubleColumn
+import tech.tablesaw.api.IntColumn
 import tech.tablesaw.columns.Column
+
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class ColumnExtensionsSpec extends BaseSpec {
     @Unroll
@@ -46,5 +53,47 @@ class ColumnExtensionsSpec extends BaseSpec {
         then:
         def e = thrown(RuntimeException)
         e.message.contains("NON")
+    }
+
+    def 'transform any column to IntColumn'() {
+        given:
+        def table = foodTable[0..100]
+
+        when:
+        table['IS_SALSA'] = table['SUBGROUP NAME'].mapToInt { it == 'Salsas' ? 1 : 0 }
+
+        then:
+        table['IS_SALSA'].size() == 101
+        table['IS_SALSA'] instanceof IntColumn
+    }
+
+    def 'transform any column to DoubleColumn'() {
+        given:
+        def table = foodTable[0..100]
+
+        when:
+        table['IS_SALSA'] = table['SUBGROUP NAME'].mapToDouble { "$it".size().doubleValue() }
+
+        then:
+        table['IS_SALSA'].size() == 101
+        table['IS_SALSA'] instanceof DoubleColumn
+    }
+
+    def 'transform any column to DateColumn'() {
+        given:
+        def table = ratesTable[0..100]
+        def toText =  { LocalDateTime time -> time.format("yyyy/MM/dd") }
+        def toDate =  { String date -> LocalDate.parse(date, "yyyy/MM/dd") }
+        def pointInTime = LocalDate.parse('1995/01/01', "yyyy/MM/dd")
+
+        when:
+        table['Date'] = table['time'].mapToText(toText).mapToDate(toDate)
+
+        and:
+        table = table[table['Date'] > pointInTime, ["Date"]]
+
+        then:
+        table.rowCount() == 41
+        table['Date'] instanceof DateColumn
     }
 }

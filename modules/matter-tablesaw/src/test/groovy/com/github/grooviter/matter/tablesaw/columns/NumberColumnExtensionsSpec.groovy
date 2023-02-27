@@ -1,22 +1,35 @@
 package com.github.grooviter.matter.tablesaw.columns
 
 import com.github.grooviter.matter.tablesaw.BaseSpec
+import tech.tablesaw.api.NumberColumn
+import tech.tablesaw.api.Table
 import tech.tablesaw.columns.Column
+import tech.tablesaw.selection.Selection
 
-class DoubleColumnExtensionsSpec extends BaseSpec {
-    void 'query column with values in numeric range'() {
+class NumberColumnExtensionsSpec extends BaseSpec {
+    void 'query column with values using "in" syntax numeric range'() {
         when:
-        Column ids = foodTable[foodTable['SUGAR'] in 0.2..0.3, "ID"]
+        Column ids = foodTable[foodTable['TRAFFICLIGHT VALUE'] in 0..2, "ID"]
 
         then:
-        ids.size() == 20
+        ids.size() == 923
     }
 
     void 'query column combining column values in range and another criteria'() {
         when:
-        Column ids = foodTable[foodTable['SUGAR'] in 0.2..0.3 & foodTable['CARBS'] <= 2, "ID"]
+        Selection where = foodTable['TRAFFICLIGHT VALUE'] in 1..2 & foodTable['CARBS'] <= 2
+        Table rows = foodTable[where, ['ID', 'TRAFFICLIGHT VALUE']]
 
         then:
-        ids.size() == 9
+        rows.size() == 70
+    }
+
+    void 'query column using between operator'() {
+        when:
+        Selection where = foodTable['SUGAR', NumberColumn].between(0.2..0.4)
+        Table rows = foodTable[where, ['ID', 'SUGAR']]
+
+        then:
+        rows.rowCount() == 53
     }
 }
