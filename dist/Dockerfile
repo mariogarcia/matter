@@ -1,7 +1,8 @@
-FROM jupyter/scipy-notebook as build
+FROM jupyter/scipy-notebook:lab-3.5.3 as build
 USER root
 COPY . /tmp/matter/
 WORKDIR /tmp/matter/
+RUN npm install --global rimraf
 RUN apt-get update && apt-get install -y openjdk-11-jdk-headless
 RUN chmod +x build.sh
 RUN ./build.sh
