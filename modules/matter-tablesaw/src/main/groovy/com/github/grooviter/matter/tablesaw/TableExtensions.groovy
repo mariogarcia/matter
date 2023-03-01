@@ -97,6 +97,18 @@ class TableExtensions {
         return source.addColumns(resolveColumn(key, replaceBy).append(replaceBy) as Column<?>[])
     }
 
+    static Table putAt(Table table, String columnName, double[] numbers) {
+        return table.addColumns(DoubleColumn.create(columnName, numbers))
+    }
+
+    static Table putAt(Table table, String columnName, int[] numbers) {
+        return table.addColumns(IntColumn.create(columnName, numbers))
+    }
+
+    static Table putAt(Table table, String columnName, String[] texts) {
+        return table.addColumns(TextColumn.create(columnName, texts))
+    }
+
     static Table minus(Table source, Column<?> columnToDelete) {
         Table destination = source.copy()
         return destination.removeColumns(destination.column(columnToDelete.name()))

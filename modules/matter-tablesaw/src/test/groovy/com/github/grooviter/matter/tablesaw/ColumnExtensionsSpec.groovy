@@ -1,5 +1,6 @@
 package com.github.grooviter.matter.tablesaw
 
+import com.github.grooviter.matter.tablesaw.test.BaseSpec
 import spock.lang.Unroll
 import tech.tablesaw.api.DateColumn
 import tech.tablesaw.api.DoubleColumn
@@ -8,7 +9,6 @@ import tech.tablesaw.columns.Column
 
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class ColumnExtensionsSpec extends BaseSpec {
     @Unroll

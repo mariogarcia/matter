@@ -1,11 +1,16 @@
 package com.github.grooviter.matter.tablesaw
 
+import com.github.grooviter.matter.tablesaw.test.BaseSpec
+import com.github.grooviter.matter.tablesaw.test.NumericAware
+import com.github.grooviter.matter.tablesaw.test.TextAware
 import tech.tablesaw.api.DoubleColumn
+import tech.tablesaw.api.IntColumn
 import tech.tablesaw.api.Table
+import tech.tablesaw.api.TextColumn
 import tech.tablesaw.columns.Column
 import tech.tablesaw.selection.Selection
 
-class TableExtensionsSpec extends BaseSpec {
+class TableExtensionsSpec extends BaseSpec implements NumericAware, TextAware {
     void 'column rows by iloc(row0...rowN, colName)'() {
         when:
         Column idColumn = foodTable.iloc(0..2, "ID")
@@ -215,17 +220,45 @@ class TableExtensionsSpec extends BaseSpec {
         given:
         Map<String,String> MAPPINGS = [
             'TRAFFICLIGHT VALUE': 'traffic_light',
-            'PYRAMID VAL': 'pyramid_val'
+            'PYRAMID VALUE': 'pyramid_val'
         ]
 
         and:
         Table renamedCols = foodTable.renameColumns(MAPPINGS)
 
         when:
-        Table result = renamedCols[0..10, ['traffic_light', 'pyramid_val']].copy()
+        Table result = renamedCols[1..10, ['traffic_light', 'pyramid_val']].copy()
 
         then:
         result.rowCount()    == 10
         result.columnCount() == 2
+    }
+
+
+    void 'assign an array of double[] to a DoubleColumn'() {
+        when:
+        foodTable['SPEC'] = zerosAsDouble(foodTable.size())
+
+        then:
+        foodTable['SPEC'] instanceof DoubleColumn
+        foodTable['SPEC'].size() == foodTable.size()
+    }
+
+    void 'assign an array of int[] to a IntColumn'() {
+        when:
+        foodTable['SPEC'] = zeros(foodTable.size())
+
+        then:
+        foodTable['SPEC'] instanceof IntColumn
+        foodTable['SPEC'].size() == foodTable.size()
+    }
+
+    void 'assign an array of String[] to a TextColumn'() {
+        when:
+        foodTable['SPEC'] = word(foodTable.size())
+
+        then:
+        foodTable['SPEC'] instanceof TextColumn
+        foodTable['SPEC'].size() == foodTable.size()
     }
 }

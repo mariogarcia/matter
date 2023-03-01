@@ -1,6 +1,6 @@
 package com.github.grooviter.matter.tablesaw.ast
 
-import com.github.grooviter.matter.tablesaw.BaseSpec
+import com.github.grooviter.matter.tablesaw.test.BaseSpec
 import tech.tablesaw.api.DoubleColumn
 import tech.tablesaw.api.Table
 import tech.tablesaw.columns.Column

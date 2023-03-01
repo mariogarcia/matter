@@ -1,4 +1,4 @@
-package com.github.grooviter.matter.tablesaw
+package com.github.grooviter.matter.tablesaw.test
 
 import spock.lang.Shared
 import spock.lang.Specification

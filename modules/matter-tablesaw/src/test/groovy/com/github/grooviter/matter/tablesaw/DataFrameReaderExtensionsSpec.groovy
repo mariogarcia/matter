@@ -1,5 +1,6 @@
 package com.github.grooviter.matter.tablesaw
 
+import com.github.grooviter.matter.tablesaw.test.BaseSpec
 import spock.lang.Ignore
 import tech.tablesaw.api.Table
 
