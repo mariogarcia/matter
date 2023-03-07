@@ -1,4 +1,4 @@
 moduleName=Tablesaw Extensions
 moduleVersion=1.0.0-SNAPSHOT
-extensionClasses=com.github.grooviter.matter.tablesaw.TableExtensions,com.github.grooviter.matter.tablesaw.ColumnExtensions,com.github.grooviter.matter.tablesaw.columns.DateColumnExtensions,com.github.grooviter.matter.tablesaw.columns.IntColumnExtensions,com.github.grooviter.matter.tablesaw.columns.DoubleColumnExtensions,com.github.grooviter.matter.tablesaw.columns.NumberColumnExtensions
+extensionClasses=com.github.grooviter.matter.tablesaw.TableExtensions,com.github.grooviter.matter.tablesaw.ColumnExtensions,com.github.grooviter.matter.tablesaw.columns.DateColumnExtensions,com.github.grooviter.matter.tablesaw.columns.IntColumnExtensions,com.github.grooviter.matter.tablesaw.columns.DoubleColumnExtensions,com.github.grooviter.matter.tablesaw.columns.NumberColumnExtensions,com.github.grooviter.matter.tablesaw.columns.StringColumnExtensions
 staticExtensionClasses=com.github.grooviter.matter.tablesaw.DataFrameReaderExtensions

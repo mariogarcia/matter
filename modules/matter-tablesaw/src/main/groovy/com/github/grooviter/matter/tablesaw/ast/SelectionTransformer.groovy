@@ -49,6 +49,7 @@ class SelectionTransformer extends ClassCodeExpressionTransformer {
             case Types.COMPARE_EQUAL: return "isEqualTo"
             case Types.COMPARE_NOT_EQUAL: return "isNotEqualTo"
             case Types.KEYWORD_IN: return "inList"
+            case Types.MATCH_REGEX: return "matches"
         }
     }
 
@@ -63,7 +64,8 @@ class SelectionTransformer extends ClassCodeExpressionTransformer {
                     Types.COMPARE_LESS_THAN_EQUAL,
                     Types.COMPARE_EQUAL,
                     Types.COMPARE_NOT_EQUAL,
-                    Types.KEYWORD_IN
+                    Types.KEYWORD_IN,
+                    Types.MATCH_REGEX
                 ]
             }
         }

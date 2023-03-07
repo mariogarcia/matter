@@ -64,7 +64,7 @@ class IndexBasedQueriesSpec extends BaseSpec {
         ids[0] == 0.22
     }
 
-    void 'query table'() {
+    void 'query table with date selection'() {
         given:
         LocalDate from = LocalDate.of(2016, Month.JANUARY, 1)
 
@@ -74,5 +74,13 @@ class IndexBasedQueriesSpec extends BaseSpec {
         then:
         table.size() == 1
         table.columnCount() == 2
+    }
+
+    void 'query table with string regex'() {
+        when:
+        Table table = foodTable[foodTable['NAME'] ==~ /.*sin miel.*/, ['NAME', 'SUGAR', 'CARBS']]
+
+        then:
+        table.size() == 7
     }
 }
