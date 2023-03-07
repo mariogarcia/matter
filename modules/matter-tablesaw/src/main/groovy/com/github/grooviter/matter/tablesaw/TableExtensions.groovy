@@ -123,6 +123,15 @@ class TableExtensions {
         return table
     }
 
+    static Object asType(Table table, Class clazz) {
+        switch(clazz) {
+            case double[][]: return table.as().doubleMatrix()
+            case int[][]: return table.as().intMatrix()
+            case float[][]: return table.as().floatMatrix()
+            default: return table
+        }
+    }
+
     private static <U> Column<U> byIndexRangeAndStringColumn(Table source, IntRange indexRange, String column) {
         return source.column(column).subset(indexRange as int[]) as Column<U>
     }

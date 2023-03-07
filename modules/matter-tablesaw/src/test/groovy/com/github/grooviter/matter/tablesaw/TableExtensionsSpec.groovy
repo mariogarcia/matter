@@ -261,4 +261,24 @@ class TableExtensionsSpec extends BaseSpec implements NumericAware, TextAware {
         foodTable['SPEC'] instanceof TextColumn
         foodTable['SPEC'].size() == foodTable.size()
     }
+
+    void 'converting table to numerical matrices'() {
+        when:
+        def matrix = foodTable.iloc(0..10, ['SUGAR', 'CARBS']) as double[][]
+
+        then:
+        matrix instanceof double[][]
+
+        when:
+        matrix = foodTable.iloc(0..10, ['BRAND ID', 'GROUP ID']) as int[][]
+
+        then:
+        matrix instanceof int[][]
+
+        when:
+        matrix = foodTable.iloc(0..10, ['FIBER', 'SODIUM']) as float[][]
+
+        then:
+        matrix instanceof float[][]
+    }
 }
