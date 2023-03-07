@@ -8,9 +8,10 @@ dependencies {
     api "org.codehaus.groovy:groovy-datetime:$groovy"
     api "org.codehaus.groovy:groovy-json:$groovy"
     api "org.codehaus.groovy:groovy-dateutil:$groovy"
-    api "tech.tablesaw:tablesaw-core:$tablesaw"
 
+    implementation "tech.tablesaw:tablesaw-core:$tablesaw"
     implementation "org.codehaus.groovy:groovy-macro:$groovy"
+
     testImplementation "org.spockframework:spock-core:2.4-M1-groovy-3.0"
 }
 
