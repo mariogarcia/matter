@@ -10,6 +10,9 @@
 /build/
 **/build/
 
+# JBake
+output
+
 # Jupyter
 **/.ipynb_checkpoints/
 
