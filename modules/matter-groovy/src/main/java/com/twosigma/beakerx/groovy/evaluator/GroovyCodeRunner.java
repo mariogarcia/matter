@@ -52,7 +52,7 @@ class GroovyCodeRunner implements Callable<TryResult> {
       scriptName += System.currentTimeMillis();
       Class<?> parsedClass = groovyEvaluator.getGroovyClassLoader().parseClass(theCode, scriptName);
       if (canBeInstantiated(parsedClass)) {
-        Object instance = parsedClass.newInstance();
+        Object instance = parsedClass.getDeclaredConstructor().newInstance();
         if (instance instanceof Script) {
           result = runScript((Script) instance);
         }
