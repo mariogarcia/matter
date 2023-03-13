@@ -3,6 +3,7 @@ package com.github.grooviter.matter.tablesaw
 import com.github.grooviter.matter.tablesaw.test.BaseSpec
 import com.github.grooviter.matter.tablesaw.test.NumericAware
 import com.github.grooviter.matter.tablesaw.test.TextAware
+import spock.lang.Ignore
 import tech.tablesaw.api.DoubleColumn
 import tech.tablesaw.api.IntColumn
 import tech.tablesaw.api.Table
@@ -170,6 +171,93 @@ class TableExtensionsSpec extends BaseSpec implements NumericAware, TextAware {
         result.columnCount() == initColSize - 1
     }
 
+    void "taking all rows by table[_, List<String>]"() {
+        when:
+        List<String> colNames = ['ID', 'NAME']
+        Table partial = foodTable[_, colNames]
+
+        then:
+        partial.rowCount() == 3197
+
+        and:
+        partial.columnCount() == 2
+    }
+
+    void "taking all rows by table[_, ['ID', 'NAME']]"() {
+        when:
+        Table partial = foodTable[_, ['ID', 'NAME']]
+
+        then:
+        partial.rowCount() == 3197
+
+        and:
+        partial.columnCount() == 2
+    }
+
+    void 'taking all rows by table[_, List<Integer>]'() {
+        when:
+        List<Integer> colIndexes = [0, 1]
+        Table partial = foodTable[_, colIndexes]
+
+        then:
+        partial.rowCount() == 3197
+
+        and:
+        partial.columnCount() == 2
+    }
+
+    void 'taking all rows by table[_, [0, 1]]'() {
+        when:
+        Table partial = foodTable[_, [0, 1]]
+
+        then:
+        partial.rowCount() == 3197
+
+        and:
+        partial.columnCount() == 2
+    }
+
+    void 'taking all rows by table[_, 0..1]'() {
+        when:
+        Table partial = foodTable[_, 0..1]
+
+        then:
+        partial.rowCount() == 3197
+
+        and:
+        partial.columnCount() == 2
+    }
+
+    void 'taking all rows by table[_, ref]'() {
+        when:
+        Table partial = ratesTable[_, ref]
+
+        then:
+        partial.rowCount() == 313
+
+        and:
+        partial.columnCount() == 2
+
+        where:
+        ref << [
+            ['y1', 'y2'],
+            (1..2) >>> 'y$it',
+            (1..2).collect {"y$it" },
+            3..4,
+        ]
+    }
+
+    void 'taking all rows by table[_, inline-expr]'() {
+        when:
+        Table partial = ratesTable[_, (1..2) >>> 'y$it']
+
+        then:
+        partial.rowCount() == 313
+
+        and:
+        partial.columnNames() == ['y1', 'y2']
+    }
+
     void 'table rows filtered by selection table = table[Selection]'() {
         when:
         Table partial = foodTable[foodTable['SUGAR', DoubleColumn].isCloseTo(3.5, 0.05)]
@@ -280,5 +368,17 @@ class TableExtensionsSpec extends BaseSpec implements NumericAware, TextAware {
 
         then:
         matrix instanceof float[][]
+    }
+
+    @Ignore
+    void 'summing columns, table[_, [col1, col2]].sum()'() {
+        given:
+        def sample = ratesTable[_, ['y1', 'y2', 'y3']].copy()
+
+        when:
+        sample['sum'] = sample.sum()
+
+        then:
+        sample['sum'].size() == ratesTable.size()
     }
 }

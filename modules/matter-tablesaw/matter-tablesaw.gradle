@@ -7,6 +7,7 @@ dependencies {
     api "org.codehaus.groovy:groovy:$groovy"
     api "org.codehaus.groovy:groovy-datetime:$groovy"
     api "org.codehaus.groovy:groovy-json:$groovy"
+    api "org.codehaus.groovy:groovy-templates:$groovy"
     api "org.codehaus.groovy:groovy-dateutil:$groovy"
 
     implementation "tech.tablesaw:tablesaw-core:$tablesaw"

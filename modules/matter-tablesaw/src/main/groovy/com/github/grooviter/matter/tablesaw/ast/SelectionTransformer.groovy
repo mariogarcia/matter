@@ -1,24 +1,20 @@
 package com.github.grooviter.matter.tablesaw.ast
 
-import groovy.transform.TupleConstructor
+import groovy.transform.InheritConstructors
 import org.codehaus.groovy.ast.ASTNode
-import org.codehaus.groovy.ast.ClassCodeExpressionTransformer
 import org.codehaus.groovy.ast.expr.BinaryExpression
 import org.codehaus.groovy.ast.expr.ConstantExpression
 import org.codehaus.groovy.ast.expr.Expression
 import org.codehaus.groovy.ast.expr.MethodCallExpression
 import org.codehaus.groovy.ast.expr.VariableExpression
-import org.codehaus.groovy.control.SourceUnit
 import org.codehaus.groovy.macro.matcher.ASTMatcher
 import org.codehaus.groovy.syntax.Types
 
 import static org.codehaus.groovy.ast.tools.GeneralUtils.args
 import static org.codehaus.groovy.ast.tools.GeneralUtils.callX
 
-
-@TupleConstructor
-class SelectionTransformer extends ClassCodeExpressionTransformer {
-    SourceUnit sourceUnit
+@InheritConstructors
+class SelectionTransformer extends ConditionalExpressionTransformer {
 
     @Override
     Expression transform(Expression expr) {
@@ -53,7 +49,7 @@ class SelectionTransformer extends ClassCodeExpressionTransformer {
         }
     }
 
-    private static isExpression(ASTNode node){
+    boolean isExpression(ASTNode node){
         ASTNode pattern = ASTMatcher.withConstraints(macro { table[column] > value }){
             placeholder("table", "column", "value")
             token {

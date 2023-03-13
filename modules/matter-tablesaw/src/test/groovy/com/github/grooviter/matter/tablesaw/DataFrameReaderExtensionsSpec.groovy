@@ -10,7 +10,6 @@ import static tech.tablesaw.api.ColumnType.SKIP
 class DataFrameReaderExtensionsSpec extends BaseSpec {
     static final String FILE_NAME = 'src/test/resources/data/interest-rates.csv'
 
-    @Ignore
     void 'reading csv with filename and separator type'() {
         when:
         Table table = Table.read().csv(FILE_NAME, sep: ',')

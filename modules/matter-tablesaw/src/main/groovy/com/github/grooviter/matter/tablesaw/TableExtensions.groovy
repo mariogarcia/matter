@@ -123,6 +123,14 @@ class TableExtensions {
         return table
     }
 
+    static Table selectColumns(Table table, IntRange intRange) {
+        return table.selectColumns(intRange as int[])
+    }
+
+    static Table selectColumns(Table table, List columnNames) {
+        return table.selectColumns(columnNames as String[])
+    }
+
     static Object asType(Table table, Class clazz) {
         switch(clazz) {
             case double[][]: return table.as().doubleMatrix()
@@ -149,8 +157,8 @@ class TableExtensions {
         }
 
         if (areNumbers) {
-            Column<?>[] columns = source.columns(cols as int[])
-            return source.rows(indexRange.toList() as int[]).select(columns*.name() as String[])
+            Column<?>[] columns = source.columns(cols as int[]) as Column<?>[]
+            return source.rows(indexRange.toList() as int[]).selectColumns(columns*.name() as String[])
         }
 
         return source.rows(indexRange.toList() as int[]).select(cols*.toString() as String[])
