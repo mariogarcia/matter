@@ -23,12 +23,12 @@ class DataFrameReaderExtensions {
 
         if (params.dateTimeFormat) {
             assert checkDateTimeFormatters(params.dateTimeFormat), "dateTimeFormat must be a string or a DateTimeFormatter instance"
-            options.dateTimeFormat(params.dateTimeFormat)
+            options.dateTimeFormat(params.dateTimeFormat.toString())
         }
 
         if (params.dateFormat) {
             assert checkDateTimeFormatters(params.dateFormat), "dateFormat must be a string or a DateTimeFormatter instance"
-            options.dateFormat(params.dateFormat)
+            options.dateFormat(params.dateFormat.toString())
         }
 
         if (params.types) {
