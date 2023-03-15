@@ -5,6 +5,8 @@ import tech.tablesaw.api.DateTimeColumn
 import tech.tablesaw.api.DoubleColumn
 import tech.tablesaw.api.IntColumn
 import tech.tablesaw.api.NumberColumn
+import tech.tablesaw.api.NumericColumn
+import tech.tablesaw.api.StringColumn
 import tech.tablesaw.api.TextColumn
 import tech.tablesaw.columns.Column
 import tech.tablesaw.selection.Selection
@@ -16,12 +18,30 @@ import java.util.function.Function
 @SuppressWarnings('unused')
 class ColumnExtensions {
 
+    private static final String TEMPORAL_COLUMN_NAME = 'tmp'
+
     static <T> Column<T> minus(Column<T> source, Number number) {
         return source.map { it - number } as Column<T>
     }
 
     static <T> Column<T> plus(Column<T> source, Number number) {
         return source.map { it + number } as Column<T>
+    }
+
+    static DoubleColumn plus(DoubleColumn source, DoubleColumn target) {
+        return DoubleColumn.create(TEMPORAL_COLUMN_NAME, [source.toList(), target.toList()].transpose().collect { a , b -> a + b }) as DoubleColumn
+    }
+
+    static IntColumn plus(IntColumn source, IntColumn target) {
+        return IntColumn.create(TEMPORAL_COLUMN_NAME, [source.toList(), target.toList()].transpose().collect { a , b -> a + b } as int[]) as IntColumn
+    }
+
+    static DoubleColumn plus(NumericColumn source, NumericColumn target) {
+        return DoubleColumn.create(TEMPORAL_COLUMN_NAME, [source.toList(), target.toList()].transpose().collect { a , b -> a + b }) as DoubleColumn
+    }
+
+    static StringColumn plus(StringColumn source, Column target) {
+        return StringColumn.create(TEMPORAL_COLUMN_NAME, [source.toList(), target.toList()].transpose().collect { a, b -> a + b}) as StringColumn
     }
 
     static <T> Column<T> div(Column<T> source, Number number) {
@@ -37,23 +57,23 @@ class ColumnExtensions {
     }
 
     static <U> IntColumn mapToInt(Column<U> column, Function<U, Integer> function) {
-        return column.mapInto(function, IntColumn.create("temporalIntColumn", column.size()))
+        return column.mapInto(function, IntColumn.create(TEMPORAL_COLUMN_NAME, column.size()))
     }
 
     static <U> DoubleColumn mapToDouble(Column<U> column, Function<U, Double> function) {
-        return column.mapInto(function, DoubleColumn.create("temporalDoubleColumn", column.size()))
+        return column.mapInto(function, DoubleColumn.create(TEMPORAL_COLUMN_NAME, column.size()))
     }
 
     static <U> TextColumn mapToText(Column<U> column, Function<U, String> function) {
-        return column.mapInto(function, TextColumn.create("temporalTextColumn", column.size()))
+        return column.mapInto(function, TextColumn.create(TEMPORAL_COLUMN_NAME, column.size()))
     }
 
     static <U> DateColumn mapToDate(Column<U> column, Function<U, LocalDate> function) {
-        return column.mapInto(function, DateColumn.create("temporalDateColumn", column.size()))
+        return column.mapInto(function, DateColumn.create(TEMPORAL_COLUMN_NAME, column.size()))
     }
 
     static <U> DateTimeColumn mapToDateTime(Column<U> column, Function<U, LocalDateTime> function) {
-        return column.mapInto(function, DateTimeColumn.create("temporalDateColumn", column.size()))
+        return column.mapInto(function, DateTimeColumn.create(TEMPORAL_COLUMN_NAME, column.size()))
     }
 
     static Column minus(Column source, Column other) {

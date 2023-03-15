@@ -1,7 +1,9 @@
 package com.github.grooviter.matter.tablesaw
 
 import com.github.grooviter.matter.tablesaw.ast.ASTOverridden
+import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
+import tech.tablesaw.aggregate.AggregateFunctions
 import tech.tablesaw.api.BooleanColumn
 import tech.tablesaw.api.ColumnType
 import tech.tablesaw.api.DateColumn
@@ -116,6 +118,20 @@ class TableExtensions {
 
     static Table dropna(Table source) {
         return source.dropRowsWithMissingValues()
+    }
+
+    @CompileDynamic
+    static DoubleColumn rowSum(Table source) {
+        return source.columns().stream().reduce(this::sumRowColumns).orElse(DoubleColumn.create("tmp"))
+    }
+
+    @CompileDynamic
+    private static DoubleColumn sumRowColumns(Column left, Column right) {
+        return DoubleColumn.create("tmp", [left.toList(), right.toList()].transpose().collect { a, b -> a + b })
+    }
+
+    static Table colSum(Table source) {
+        return source.summarize(source.columnNames(), AggregateFunctions.sum).apply()
     }
 
     static Table renameColumns(Table table, Map<String, String> columnNameMappings) {

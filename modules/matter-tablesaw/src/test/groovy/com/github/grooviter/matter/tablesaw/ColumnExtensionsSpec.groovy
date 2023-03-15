@@ -5,6 +5,8 @@ import spock.lang.Unroll
 import tech.tablesaw.api.DateColumn
 import tech.tablesaw.api.DoubleColumn
 import tech.tablesaw.api.IntColumn
+import tech.tablesaw.api.StringColumn
+import tech.tablesaw.api.Table
 import tech.tablesaw.columns.Column
 
 import java.time.LocalDate
@@ -95,5 +97,85 @@ class ColumnExtensionsSpec extends BaseSpec {
         then:
         table.rowCount() == 41
         table['Date'] instanceof DateColumn
+    }
+
+    def 'sum operations DoubleColumn + DoubleColumn'() {
+        given:
+        def table = Table.create(
+            DoubleColumn.create("a", 1.0),
+            DoubleColumn.create("b", 2.0)
+        )
+
+        when:
+        table['a_b'] = table['a'] + table['b']
+
+        then:
+        table['a_b'].size() == table.size()
+
+        and:
+        table['a_b'] instanceof DoubleColumn
+
+        and:
+        table['a_b'][0] == 3.0
+    }
+
+    def 'sum operations IntColumn + IntColumn'() {
+        given:
+        def table = Table.create(
+            IntColumn.create("a", [1] as int[]),
+            IntColumn.create("b", [2] as int[])
+        )
+
+        when:
+        table['a_b'] = table['a'] + table['b']
+
+        then:
+        table['a_b'].size() == table.size()
+
+        and:
+        table['a_b'] instanceof IntColumn
+
+        and:
+        table['a_b'][0] == 3
+    }
+
+    def 'sum operations NumericColumn + NumericColumn'() {
+        given:
+        def table = Table.create(
+            DoubleColumn.create("a", 1.0),
+            IntColumn.create("b", [2] as int[])
+        )
+
+        when:
+        table['a_b'] = table['a'] + table['b']
+
+        then:
+        table['a_b'].size() == table.size()
+
+        and:
+        table['a_b'] instanceof DoubleColumn
+
+        and:
+        table['a_b'][0] == 3.0
+    }
+
+    def 'sum operations StringColumn + Column'() {
+        given:
+        def table = Table.create(
+            StringColumn.create("a", "a"),
+            IntColumn.create("b", [2] as int[])
+        )
+
+        when:
+        table['a_b'] = table['a'] + table['b']
+
+        then:
+        table['a_b'].size() == table.size()
+
+        and:
+        table['a_b'] instanceof StringColumn
+
+        and:
+        table['a_b'][0] == "a2"
     }
 }

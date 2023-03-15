@@ -7,18 +7,21 @@ import tech.tablesaw.api.Table
 import tech.tablesaw.io.csv.CsvReadOptions
 
 class BaseSpec extends Specification {
+    static final String FOOD_CSV_PATH = "src/test/resources/data/food.csv"
+    static final String RATES_CSV_PATH = "src/test/resources/data/interest-rates.csv"
+
     @Shared Table foodTable
     @Shared Table ratesTable
 
     void setup() {
-        def foodOptions = CsvReadOptions.builder("src/test/resources/data/food.csv")
+        def foodOptions = CsvReadOptions.builder(FOOD_CSV_PATH)
                 .separator(';' as char)
                 .header(true)
                 .missingValueIndicator('NaN')
 
         foodTable = Table.read().csv(foodOptions)
 
-        def ratesOptions = CsvReadOptions.builder("src/test/resources/data/interest-rates.csv")
+        def ratesOptions = CsvReadOptions.builder(RATES_CSV_PATH)
                 .separator(',' as char)
                 .header(true)
         .dateTimeFormat("yyyy-MM-dd HH:mm:ss.SSS x")

@@ -370,15 +370,17 @@ class TableExtensionsSpec extends BaseSpec implements NumericAware, TextAware {
         matrix instanceof float[][]
     }
 
-    @Ignore
     void 'summing columns, table[_, [col1, col2]].sum()'() {
         given:
-        def sample = ratesTable[_, ['y1', 'y2', 'y3']].copy()
+        def sample = ratesTable[_, ['y1', 'y2', 'y3']].copy() as Table
 
         when:
-        sample['sum'] = sample.sum()
+        sample['sum'] = sample.dropna().rowSum()
 
         then:
         sample['sum'].size() == ratesTable.size()
+
+        and:
+        sample['sum'][0] == (ratesTable['y1'] + ratesTable['y2'] + ratesTable['y3'])[0]
     }
 }

@@ -1,0 +1,38 @@
+= Tables
+:jbake-type: guide
+:jbake-status: published
+:jbake-tags: blog,asciidoc
+:idprefix:
+:parent:
+:order: 2
+:ordersub: 0
+
+== Tables
+
+TODO
+
+== Load data
+
+TODO
+
+== Filtering & Sorting
+
+TODO
+
+=== Filtering
+
+TODO
+
+=== Sorting
+
+TODO
+
+=== Groovy list syntax
+
+TODO
+
+== Column Operations
+
+TODO
+
+== Rows operations
