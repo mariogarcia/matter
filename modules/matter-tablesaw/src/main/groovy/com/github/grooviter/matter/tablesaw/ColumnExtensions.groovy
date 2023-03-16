@@ -1,5 +1,6 @@
 package com.github.grooviter.matter.tablesaw
 
+import org.codehaus.groovy.runtime.DefaultGroovyMethods
 import tech.tablesaw.api.DateColumn
 import tech.tablesaw.api.DateTimeColumn
 import tech.tablesaw.api.DoubleColumn
@@ -42,6 +43,18 @@ class ColumnExtensions {
 
     static StringColumn plus(StringColumn source, Column target) {
         return StringColumn.create(TEMPORAL_COLUMN_NAME, sumLists(source, target) as String[])
+    }
+
+    static Object asType(Column source, Class clazz) {
+        switch (clazz) {
+            case int[]:
+            case double[]:
+            case float[]:
+            case String[]:
+                return source.toList().asType(clazz)
+            default:
+                return DefaultGroovyMethods.asType(source, clazz)
+        }
     }
 
     private static List sumLists(Column left, Column right) {

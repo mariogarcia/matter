@@ -180,7 +180,6 @@ class ColumnExtensionsSpec extends BaseSpec {
         table['a_b'][0] == "a2"
     }
 
-    @Ignore
     def 'casting columns to arrays'() {
         given:
         Table table = Table.create(
@@ -190,7 +189,7 @@ class ColumnExtensionsSpec extends BaseSpec {
         )
 
         when:
-        def arrayA = table['a']
+        def arrayA = table['a'] as int[]
         def arrayB = table['b'] as double[]
         def arrayC = table["c"] as String[]
 
