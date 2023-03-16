@@ -3,7 +3,6 @@ package com.github.grooviter.matter.tablesaw
 import com.github.grooviter.matter.tablesaw.test.BaseSpec
 import com.github.grooviter.matter.tablesaw.test.NumericAware
 import com.github.grooviter.matter.tablesaw.test.TextAware
-import spock.lang.Ignore
 import tech.tablesaw.api.DoubleColumn
 import tech.tablesaw.api.IntColumn
 import tech.tablesaw.api.Table

@@ -29,19 +29,23 @@ class ColumnExtensions {
     }
 
     static DoubleColumn plus(DoubleColumn source, DoubleColumn target) {
-        return DoubleColumn.create(TEMPORAL_COLUMN_NAME, [source.toList(), target.toList()].transpose().collect { a , b -> a + b }) as DoubleColumn
+        return DoubleColumn.create(TEMPORAL_COLUMN_NAME, sumLists(source, target) as double[])
     }
 
     static IntColumn plus(IntColumn source, IntColumn target) {
-        return IntColumn.create(TEMPORAL_COLUMN_NAME, [source.toList(), target.toList()].transpose().collect { a , b -> a + b } as int[]) as IntColumn
+        return IntColumn.create(TEMPORAL_COLUMN_NAME, sumLists(source, target) as int[])
     }
 
     static DoubleColumn plus(NumericColumn source, NumericColumn target) {
-        return DoubleColumn.create(TEMPORAL_COLUMN_NAME, [source.toList(), target.toList()].transpose().collect { a , b -> a + b }) as DoubleColumn
+        return DoubleColumn.create(TEMPORAL_COLUMN_NAME, sumLists(source, target) as double[])
     }
 
     static StringColumn plus(StringColumn source, Column target) {
-        return StringColumn.create(TEMPORAL_COLUMN_NAME, [source.toList(), target.toList()].transpose().collect { a, b -> a + b}) as StringColumn
+        return StringColumn.create(TEMPORAL_COLUMN_NAME, sumLists(source, target) as String[])
+    }
+
+    private static List sumLists(Column left, Column right) {
+        return [left.toList(), right.toList()].transpose().collect { a , b -> a + b }
     }
 
     static <T> Column<T> div(Column<T> source, Number number) {

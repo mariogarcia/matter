@@ -1,6 +1,7 @@
 package com.github.grooviter.matter.tablesaw
 
 import com.github.grooviter.matter.tablesaw.test.BaseSpec
+import spock.lang.Ignore
 import spock.lang.Unroll
 import tech.tablesaw.api.DateColumn
 import tech.tablesaw.api.DoubleColumn
@@ -161,7 +162,7 @@ class ColumnExtensionsSpec extends BaseSpec {
 
     def 'sum operations StringColumn + Column'() {
         given:
-        def table = Table.create(
+        Table table = Table.create(
             StringColumn.create("a", "a"),
             IntColumn.create("b", [2] as int[])
         )
@@ -177,5 +178,30 @@ class ColumnExtensionsSpec extends BaseSpec {
 
         and:
         table['a_b'][0] == "a2"
+    }
+
+    @Ignore
+    def 'casting columns to arrays'() {
+        given:
+        Table table = Table.create(
+            IntColumn.create("a", [1] as int[]),
+            DoubleColumn.create("b", [2.0] as double[]),
+            StringColumn.create("c", ["c"] as String[])
+        )
+
+        when:
+        def arrayA = table['a']
+        def arrayB = table['b'] as double[]
+        def arrayC = table["c"] as String[]
+
+        then:
+        arrayA instanceof int[]
+        arrayB instanceof double[]
+        arrayC instanceof String[]
+
+        and:
+        arrayA[0] == 1
+        arrayB[0] == 2.0
+        arrayC[0] == "c"
     }
 }

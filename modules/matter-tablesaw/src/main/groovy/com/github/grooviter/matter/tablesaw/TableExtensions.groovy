@@ -62,7 +62,7 @@ class TableExtensions {
     }
 
     static <T extends Column> T getAt(Table source, String column, Class<T> clazz){
-        return source.column(column).asType(clazz)
+        return (T) source.column(column).asType(clazz)
     }
 
     static <U> Column <U> getAt(Table source, Selection filter, String col) {
