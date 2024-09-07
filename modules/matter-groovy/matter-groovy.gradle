@@ -10,7 +10,7 @@ configurations {
 dependencies {
     implementation project(":matter-base")
     implementation project(":matter-tablesaw")
-    implementation "org.codehaus.groovy:groovy-all:$groovy"
+    implementation "org.apache.groovy:groovy-all:$groovy"
     implementation "org.antlr:antlr4-runtime:$antlr4Version"
     antlr "org.antlr:antlr4:$antlr4Version"
     runtimetools project(":matter-runtimetools")

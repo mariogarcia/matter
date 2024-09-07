@@ -5,14 +5,14 @@ plugins {
 
 dependencies {
     api project(":matter-core")
-    api "org.codehaus.groovy:groovy:$groovy"
-    api "org.codehaus.groovy:groovy-datetime:$groovy"
-    api "org.codehaus.groovy:groovy-json:$groovy"
-    api "org.codehaus.groovy:groovy-templates:$groovy"
-    api "org.codehaus.groovy:groovy-dateutil:$groovy"
+    api "org.apache.groovy:groovy:$groovy"
+    api "org.apache.groovy:groovy-datetime:$groovy"
+    api "org.apache.groovy:groovy-json:$groovy"
+    api "org.apache.groovy:groovy-templates:$groovy"
+    api "org.apache.groovy:groovy-dateutil:$groovy"
 
     implementation "tech.tablesaw:tablesaw-core:$tablesaw"
-    implementation "org.codehaus.groovy:groovy-macro:$groovy"
+    implementation "org.apache.groovy:groovy-macro:$groovy"
 
     testImplementation "org.spockframework:spock-core:2.4-M1-groovy-3.0"
 }
